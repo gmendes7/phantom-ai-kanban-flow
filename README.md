@@ -1,3 +1,4 @@
+ulitlizei meu bot, para integrar no banco de dados, do sistema da tesk, dentro da hom
 # Welcome to your Lovable project
 
 ## Project info
