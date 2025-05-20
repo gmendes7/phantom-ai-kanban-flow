@@ -1,4 +1,3 @@
-
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { 
@@ -9,7 +8,8 @@ import {
   Brain, 
   Calendar,
   Users,
-  Zap
+  Zap,
+  Ghost
 } from 'lucide-react';
 
 const Index = () => {
@@ -18,15 +18,16 @@ const Index = () => {
       {/* Header */}
       <header className="py-4 px-6 border-b border-border">
         <div className="container mx-auto flex items-center justify-between">
-          <div className="flex items-center">
+          <div className="flex items-center gap-2">
+            <Ghost className="h-6 w-6 text-phantom-500" />
             <h1 className="text-2xl font-bold text-gradient">Phantom Kanban</h1>
           </div>
           <div className="flex items-center space-x-4">
             <Link to="/login">
-              <Button variant="ghost">Login</Button>
+              <Button variant="ghost">Entrar</Button>
             </Link>
             <Link to="/register">
-              <Button>Sign Up</Button>
+              <Button>Cadastrar</Button>
             </Link>
           </div>
         </div>
@@ -35,22 +36,25 @@ const Index = () => {
       {/* Hero section */}
       <section className="py-20 px-6">
         <div className="container mx-auto text-center">
+          <div className="flex justify-center mb-6">
+            <Ghost className="h-20 w-20 text-phantom-500 animate-pulse" />
+          </div>
           <h1 className="text-5xl md:text-6xl font-bold mb-6 text-gradient">
             Phantom Kanban Flow AI
           </h1>
           <p className="text-xl mb-10 max-w-3xl mx-auto text-muted-foreground">
-            The intelligent Kanban board that uses AI to boost your productivity and streamline your workflow
+            O quadro Kanban inteligente que usa IA para aumentar sua produtividade e otimizar seu fluxo de trabalho
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link to="/register">
               <Button size="lg" className="px-8">
-                Get Started
+                Começar Agora
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </Link>
             <Link to="/login">
               <Button size="lg" variant="outline">
-                Login to Your Account
+                Entrar na sua Conta
               </Button>
             </Link>
           </div>
@@ -70,24 +74,24 @@ const Index = () => {
       <section className="py-20 px-6 bg-secondary/30">
         <div className="container mx-auto">
           <h2 className="text-3xl font-bold text-center mb-16 text-gradient">
-            Powered by Intelligence
+            Potencializado por Inteligência
           </h2>
           
           <div className="grid md:grid-cols-3 gap-8">
             <FeatureCard 
               icon={<Brain className="h-10 w-10 text-phantom-500" />}
-              title="AI-Powered Insights"
-              description="Get intelligent predictions and suggestions based on your task history and team performance."
+              title="Insights com IA"
+              description="Obtenha previsões e sugestões inteligentes baseadas no histórico de tarefas e desempenho da equipe."
             />
             <FeatureCard 
               icon={<LayoutGrid className="h-10 w-10 text-phantom-500" />}
-              title="Flexible Kanban Board"
-              description="Drag and drop tasks, customize columns, and organize your workflow exactly how you need it."
+              title="Quadro Kanban Flexível"
+              description="Arraste e solte tarefas, personalize colunas e organize seu fluxo de trabalho exatamente como você precisa."
             />
             <FeatureCard 
-              icon={<MessageCircle className="h-10 w-10 text-phantom-500" />}
-              title="Intelligent Assistant"
-              description="Get help and answers about your tasks from our AI-powered chat assistant."
+              icon={<Ghost className="h-10 w-10 text-phantom-500" />}
+              title="Assistente Inteligente"
+              description="Obtenha ajuda e respostas sobre suas tarefas com nosso assistente de chat com IA."
             />
           </div>
         </div>
@@ -97,34 +101,37 @@ const Index = () => {
       <section className="py-20 px-6">
         <div className="container mx-auto">
           <h2 className="text-3xl font-bold text-center mb-16">
-            Why Choose Phantom Kanban?
+            Por que escolher o Phantom Kanban?
           </h2>
           
           <div className="grid md:grid-cols-2 gap-12">
             <div className="space-y-8">
               <BenefitItem 
                 icon={<Zap className="h-5 w-5 text-phantom-500" />}
-                title="Boost Productivity"
-                description="Our AI suggests optimizations to your workflow to help you accomplish more in less time."
+                title="Aumento de Produtividade"
+                description="Nossa IA sugere otimizações para seu fluxo de trabalho, ajudando você a realizar mais em menos tempo."
               />
               <BenefitItem 
                 icon={<Calendar className="h-5 w-5 text-phantom-500" />}
-                title="Smart Deadlines"
-                description="Get realistic deadline predictions based on your historical performance data."
+                title="Prazos Inteligentes"
+                description="Obtenha previsões realistas de prazos com base em dados históricos de desempenho."
               />
               <BenefitItem 
                 icon={<Users className="h-5 w-5 text-phantom-500" />}
-                title="Team Collaboration"
-                description="Assign tasks, share boards, and keep everyone synchronized on project progress."
+                title="Colaboração em Equipe"
+                description="Atribua tarefas, compartilhe quadros e mantenha todos sincronizados no progresso do projeto."
               />
             </div>
             
             <div className="glass-panel rounded-xl p-8 flex items-center justify-center">
-              <img 
-                src="https://i.imgur.com/nS1SsZB.png" 
-                alt="Phantom Kanban Task View"
-                className="rounded-lg max-w-full h-auto shadow-lg"
-              />
+              <div className="relative">
+                <img 
+                  src="https://i.imgur.com/nS1SsZB.png" 
+                  alt="Phantom Kanban Task View"
+                  className="rounded-lg max-w-full h-auto shadow-lg"
+                />
+                <Ghost className="absolute -top-10 -right-10 h-20 w-20 text-phantom-500 rotate-12 opacity-70" />
+              </div>
             </div>
           </div>
         </div>
@@ -134,14 +141,14 @@ const Index = () => {
       <section className="py-20 px-6 bg-gradient-to-b from-phantom-600/20 to-background">
         <div className="container mx-auto text-center">
           <h2 className="text-3xl font-bold mb-6">
-            Ready to transform your workflow?
+            Pronto para transformar seu fluxo de trabalho?
           </h2>
           <p className="text-xl mb-10 max-w-2xl mx-auto text-muted-foreground">
-            Join thousands of teams already using Phantom Kanban to boost their productivity.
+            Junte-se a milhares de equipes que já usam o Phantom Kanban para aumentar sua produtividade.
           </p>
           <Link to="/register">
             <Button size="lg" className="px-8">
-              Start for Free
+              Comece Gratuitamente
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
           </Link>
@@ -152,14 +159,15 @@ const Index = () => {
       <footer className="py-8 px-6 border-t border-border mt-auto">
         <div className="container mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <div className="mb-4 md:mb-0">
+            <div className="mb-4 md:mb-0 flex items-center gap-2">
+              <Ghost className="h-5 w-5 text-phantom-500" />
               <h2 className="text-xl font-bold text-gradient">Phantom Kanban</h2>
-              <p className="text-sm text-muted-foreground">
-                Developed by @schjneiderr
+              <p className="text-sm text-muted-foreground ml-2">
+                Desenvolvido por @schjneiderr
               </p>
             </div>
             <div className="text-sm text-muted-foreground">
-              © {new Date().getFullYear()} Phantom Kanban Flow AI. All rights reserved.
+              © {new Date().getFullYear()} Phantom Kanban Flow AI. Todos os direitos reservados.
             </div>
           </div>
         </div>
