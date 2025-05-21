@@ -1,4 +1,4 @@
-ulitlizei meu bot, para integrar no banco de dados, do sistema da tesk, dentro da hom
+atualizzei o sistema de IA, e coloquei novos temas. ulitlizei meu bot, para integrar no banco de dados, do sistema da tesk, dentro da hom
 # Welcome to your Lovable project
 
 ## Project info
@@ -66,9 +66,3 @@ This project is built with:
 Simply open [Lovable](https://lovable.dev/projects/ae560220-7cf9-4fc8-a979-a644490a195a) and click on Share -> Publish.
 
 ## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
