@@ -15,6 +15,24 @@ interface ChangelogEntry {
 const changelogData: ChangelogEntry[] = [
   {
     date: '21/05/2025',
+    title: 'Adição de Painel Admin',
+    type: 'feature',
+    description: 'Implementação de painel administrativo com gerenciamento de usuários e configurações do sistema.'
+  },
+  {
+    date: '21/05/2025',
+    title: 'Novas Páginas Institucionais',
+    type: 'feature',
+    description: 'Adicionadas páginas de Início, Sobre, Serviços e Contato para melhorar a experiência do usuário.'
+  },
+  {
+    date: '21/05/2025',
+    title: 'Mudança de Nome para Spectra',
+    type: 'visual',
+    description: 'Sistema renomeado para Spectra, com atualização da identidade visual e novas cores.'
+  },
+  {
+    date: '21/05/2025',
     title: 'Lançamento do Modo Escuro',
     type: 'visual',
     description: 'Implementação do modo escuro em toda a aplicação, proporcionando uma experiência visual mais confortável.'

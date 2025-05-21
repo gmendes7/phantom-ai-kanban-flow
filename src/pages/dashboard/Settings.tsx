@@ -29,23 +29,23 @@ const Settings = () => {
   
   const handleProfileUpdate = (e: React.FormEvent) => {
     e.preventDefault();
-    toast.success('Profile updated successfully');
+    toast.success('Perfil atualizado com sucesso');
   };
   
   const handlePasswordChange = (e: React.FormEvent) => {
     e.preventDefault();
     
     if (newPassword !== confirmPassword) {
-      toast.error('New passwords do not match');
+      toast.error('As novas senhas não correspondem');
       return;
     }
     
     if (newPassword.length < 8) {
-      toast.error('Password should be at least 8 characters');
+      toast.error('A senha deve ter pelo menos 8 caracteres');
       return;
     }
     
-    toast.success('Password changed successfully');
+    toast.success('Senha alterada com sucesso');
     setCurrentPassword('');
     setNewPassword('');
     setConfirmPassword('');
@@ -54,23 +54,23 @@ const Settings = () => {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-2xl font-bold">Settings</h1>
-        <p className="text-muted-foreground">Manage your account settings and preferences</p>
+        <h1 className="text-2xl font-bold">Configurações</h1>
+        <p className="text-muted-foreground">Gerencie suas configurações de conta e preferências</p>
       </div>
       
       <div className="grid gap-8 md:grid-cols-2">
         {/* Profile Settings */}
         <Card>
           <CardHeader>
-            <CardTitle>Profile</CardTitle>
+            <CardTitle>Perfil</CardTitle>
             <CardDescription>
-              Update your personal information
+              Atualize suas informações pessoais
             </CardDescription>
           </CardHeader>
           <form onSubmit={handleProfileUpdate}>
             <CardContent className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="name">Name</Label>
+                <Label htmlFor="name">Nome</Label>
                 <Input
                   id="name"
                   value={name}
@@ -88,7 +88,7 @@ const Settings = () => {
               </div>
             </CardContent>
             <CardFooter>
-              <Button type="submit">Save Changes</Button>
+              <Button type="submit">Salvar Alterações</Button>
             </CardFooter>
           </form>
         </Card>
@@ -96,15 +96,15 @@ const Settings = () => {
         {/* Password Settings */}
         <Card>
           <CardHeader>
-            <CardTitle>Password</CardTitle>
+            <CardTitle>Senha</CardTitle>
             <CardDescription>
-              Change your password
+              Altere sua senha
             </CardDescription>
           </CardHeader>
           <form onSubmit={handlePasswordChange}>
             <CardContent className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="currentPassword">Current Password</Label>
+                <Label htmlFor="currentPassword">Senha Atual</Label>
                 <Input
                   id="currentPassword"
                   type="password"
@@ -113,7 +113,7 @@ const Settings = () => {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="newPassword">New Password</Label>
+                <Label htmlFor="newPassword">Nova Senha</Label>
                 <Input
                   id="newPassword"
                   type="password"
@@ -122,7 +122,7 @@ const Settings = () => {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="confirmPassword">Confirm New Password</Label>
+                <Label htmlFor="confirmPassword">Confirmar Nova Senha</Label>
                 <Input
                   id="confirmPassword"
                   type="password"
@@ -132,7 +132,7 @@ const Settings = () => {
               </div>
             </CardContent>
             <CardFooter>
-              <Button type="submit">Change Password</Button>
+              <Button type="submit">Alterar Senha</Button>
             </CardFooter>
           </form>
         </Card>
@@ -141,20 +141,20 @@ const Settings = () => {
       {/* Notification & AI Settings */}
       <Card>
         <CardHeader>
-          <CardTitle>Preferences</CardTitle>
+          <CardTitle>Preferências</CardTitle>
           <CardDescription>
-            Manage your application settings
+            Gerencie suas configurações de aplicação
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="space-y-4">
-            <h3 className="text-lg font-medium">Notifications</h3>
+            <h3 className="text-lg font-medium">Notificações</h3>
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <div className="space-y-0.5">
-                  <Label htmlFor="notifications">Enable Notifications</Label>
+                  <Label htmlFor="notifications">Ativar Notificações</Label>
                   <p className="text-sm text-muted-foreground">
-                    Receive notifications for task updates and reminders
+                    Receber notificações de atualizações de tarefas e lembretes
                   </p>
                 </div>
                 <Switch
@@ -166,9 +166,9 @@ const Settings = () => {
               
               <div className="flex items-center justify-between">
                 <div className="space-y-0.5">
-                  <Label htmlFor="emailNotifications">Email Notifications</Label>
+                  <Label htmlFor="emailNotifications">Notificações por Email</Label>
                   <p className="text-sm text-muted-foreground">
-                    Receive notifications via email
+                    Receber notificações via email
                   </p>
                 </div>
                 <Switch
@@ -184,13 +184,13 @@ const Settings = () => {
           <Separator />
           
           <div className="space-y-4">
-            <h3 className="text-lg font-medium">AI Features</h3>
+            <h3 className="text-lg font-medium">Recursos de IA</h3>
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <div className="space-y-0.5">
-                  <Label htmlFor="aiSuggestions">AI Suggestions</Label>
+                  <Label htmlFor="aiSuggestions">Sugestões de IA</Label>
                   <p className="text-sm text-muted-foreground">
-                    Receive AI-powered suggestions for task management
+                    Receber sugestões baseadas em IA para gerenciamento de tarefas
                   </p>
                 </div>
                 <Switch
@@ -203,8 +203,8 @@ const Settings = () => {
           </div>
         </CardContent>
         <CardFooter>
-          <Button onClick={() => toast.success('Preferences saved')}>
-            Save Preferences
+          <Button onClick={() => toast.success('Preferências salvas')}>
+            Salvar Preferências
           </Button>
         </CardFooter>
       </Card>
@@ -212,14 +212,14 @@ const Settings = () => {
       {/* About */}
       <Card>
         <CardHeader>
-          <CardTitle>About</CardTitle>
+          <CardTitle>Sobre</CardTitle>
         </CardHeader>
         <CardContent>
           <p className="text-sm text-muted-foreground">
-            Phantom Kanban Flow AI - A project by @schjneiderr
+            Spectra - Sistema de Gerenciamento com Suporte de IA desenvolvido por tri.nity tecnologias
           </p>
           <p className="text-sm text-muted-foreground mt-2">
-            Version 1.0.0
+            Versão 1.0.0
           </p>
         </CardContent>
       </Card>
