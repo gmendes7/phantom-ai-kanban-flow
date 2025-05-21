@@ -119,11 +119,11 @@ const ChatbotWidget = () => {
     
     if (userQueryLower.includes('quem') || userQueryLower.includes('criou') || userQueryLower.includes('desenvolvedor')) {
       return {
-        text: 'Este sistema foi desenvolvido por @schjneiderr. Você pode encontrar mais informações na seção Sobre da página de Configurações.',
+        text: 'Este sistema foi desenvolvido por Gabriel Mendes (schjneiderr), 18 anos, dono da Trinity Tecnologias. Você pode encontrar mais informações na seção Sobre.',
         links: [
           {
-            text: 'Ver Sobre',
-            action: '/dashboard/settings'
+            text: 'Ver informações de contato',
+            action: '/contato'
           }
         ]
       };
@@ -147,9 +147,45 @@ const ChatbotWidget = () => {
       };
     }
     
+    if (userQueryLower.includes('tema') || userQueryLower.includes('personalizar') || userQueryLower.includes('cor') || userQueryLower.includes('cores')) {
+      return {
+        text: 'Para personalizar o tema do quadro Kanban, clique no botão "Temas" no canto superior direito do quadro. Você pode escolher entre diferentes temas como roxo (padrão), azul, verde, preto ou branco. As preferências de tema são salvas automaticamente para sua próxima visita.',
+        links: [
+          {
+            text: 'Ir para o quadro Kanban',
+            action: '/dashboard/kanban'
+          }
+        ]
+      };
+    }
+    
+    if (userQueryLower.includes('contato') || userQueryLower.includes('telefone') || userQueryLower.includes('email')) {
+      return {
+        text: 'Você pode entrar em contato com a Trinity Tecnologias pelos seguintes meios: Telefone: (67) 99141-5904, Email: tecnologiastrinity@gmail.com ou visitando nossa página de contato.',
+        links: [
+          {
+            text: 'Ver página de contato',
+            action: '/contato'
+          }
+        ]
+      };
+    }
+    
+    if (userQueryLower.includes('github') || userQueryLower.includes('perfil') || userQueryLower.includes('código')) {
+      return {
+        text: 'Você pode encontrar o desenvolvedor no GitHub em: g.mendes7 ou schjneiderr.',
+        links: [
+          {
+            text: 'Ver perfil GitHub',
+            action: 'https://github.com/schjneiderr'
+          }
+        ]
+      };
+    }
+    
     // Resposta padrão
     return {
-      text: 'Sou seu assistente Phantom Kanban. Posso ajudar você com a criação de tarefas, gerenciamento do seu quadro, entendimento dos recursos de IA ou navegação no aplicativo. O que você gostaria de saber?'
+      text: 'Sou seu assistente Phantom AI no Spectra. Posso ajudar você com a criação de tarefas, gerenciamento do seu quadro, personalização de temas, entendimento dos recursos de IA ou navegação no aplicativo. O que você gostaria de saber?'
     };
   };
 
@@ -157,7 +193,7 @@ const ChatbotWidget = () => {
     <>
       {/* Botão de toggle do chatbot */}
       <Button
-        className="fixed bottom-4 right-4 h-12 w-12 rounded-full shadow-lg"
+        className="fixed h-12 w-12 rounded-full shadow-lg z-50"
         onClick={toggleChat}
       >
         <MessageCircle size={20} />
@@ -167,7 +203,7 @@ const ChatbotWidget = () => {
       {isOpen && (
         <div 
           className={`
-            fixed bottom-20 right-4 w-80 sm:w-96 rounded-lg shadow-lg overflow-hidden flex flex-col
+            fixed z-50 bottom-20 right-4 w-80 sm:w-96 rounded-lg shadow-lg overflow-hidden flex flex-col
             bg-card border border-border transition-all duration-300 ease-in-out animate-fade-in
             ${isMinimized ? 'h-12' : 'h-[450px]'}
           `}
@@ -175,7 +211,7 @@ const ChatbotWidget = () => {
           {/* Cabeçalho do chat */}
           <div className="p-3 bg-primary flex items-center justify-between">
             <div className="flex items-center">
-              <Ghost className="mr-2 h-4 w-4 text-primary-foreground" />
+              <Ghost className="mr-2 h-4 w-4 text-primary-foreground animated-ghost" />
               <h3 className="font-medium text-primary-foreground">Assistente Phantom AI</h3>
             </div>
             <div className="flex items-center space-x-1">

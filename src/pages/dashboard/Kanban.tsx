@@ -1,30 +1,21 @@
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { 
   PlusIcon, 
-  TrashIcon,
   LayoutGrid,
   Calendar,
-  User2,
-  Clock,
   AlertTriangle,
   Check,
-  PenLine,
-  MoreHorizontal
+  Ghost
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { toast } from 'sonner';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { Badge } from '@/components/ui/badge';
 import KanbanTask from '@/components/kanban/KanbanTask';
 import KanbanColumn from '@/components/kanban/KanbanColumn';
 import AddTaskDialog from '@/components/kanban/AddTaskDialog';
+import ThemeSelector, { themes } from '@/components/kanban/ThemeSelector';
 import { Task, KanbanColumn as ColumnType } from '@/types/kanban';
 
 // Dados iniciais de exemplo
@@ -112,6 +103,8 @@ const Kanban = () => {
   const [draggedTask, setDraggedTask] = useState<Task | null>(null);
   const [editingTask, setEditingTask] = useState<Task | null>(null);
   const [addColumnActive, setAddColumnActive] = useState(false);
+  const [currentTheme, setCurrentTheme] = useState('purple');
+  const [themeColors, setThemeColors] = useState(themes[0].colors);
   const newColumnInputRef = useRef<HTMLInputElement>(null);
   
   // Estado de recomendações de IA (simulado)
@@ -121,6 +114,34 @@ const Kanban = () => {
     'Com base no desempenho anterior, "Design da página inicial" pode levar mais tempo que o estimado',
     'Considere dividir "Implementar autenticação" em tarefas menores'
   ];
+
+  // Efeito para aplicar cores do tema
+  useEffect(() => {
+    const selectedTheme = themes.find(theme => theme.key === currentTheme) || themes[0];
+    setThemeColors(selectedTheme.colors);
+    
+    // Atualizar variáveis CSS para o tema
+    document.documentElement.style.setProperty('--kanban-todo-color', selectedTheme.colors.todo);
+    document.documentElement.style.setProperty('--kanban-inprogress-color', selectedTheme.colors.inprogress);
+    document.documentElement.style.setProperty('--kanban-review-color', selectedTheme.colors.review);
+    document.documentElement.style.setProperty('--kanban-done-color', selectedTheme.colors.done);
+    
+    // Aplicar classe de fundo se existir
+    const body = document.querySelector('body');
+    if (body) {
+      // Remover todas as classes de tema anteriores
+      themes.forEach(t => {
+        if (t.colors.bg.startsWith('bg-')) {
+          body.classList.remove(t.colors.bg);
+        }
+      });
+      
+      // Adicionar nova classe de tema
+      if (selectedTheme.colors.bg.startsWith('bg-')) {
+        body.classList.add(selectedTheme.colors.bg);
+      }
+    }
+  }, [currentTheme]);
 
   const handleAddTask = (newTask: Omit<Task, 'id' | 'createdAt' | 'predictedDeadline'>) => {
     const id = Date.now().toString();
@@ -225,12 +246,28 @@ const Kanban = () => {
     toast.success('Coluna excluída com sucesso');
   };
 
+  const handleThemeChange = (theme: any) => {
+    setCurrentTheme(theme.key);
+    localStorage.setItem('kanban-theme', theme.key);
+  };
+
+  // Efeito para carregar tema salvo
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('kanban-theme');
+    if (savedTheme) {
+      setCurrentTheme(savedTheme);
+    }
+  }, []);
+
   return (
-    <div className="h-full flex flex-col">
+    <div className={`h-full flex flex-col ${themeColors.bg.startsWith('bg-') ? themeColors.bg : ''}`}>
       <div className="mb-6">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
           <div>
-            <h1 className="text-2xl font-bold">Quadro Kanban</h1>
+            <h1 className="text-2xl font-bold flex items-center">
+              <Ghost className="mr-2 h-6 w-6 text-phantom-500 animate-pulse" />
+              Quadro Kanban
+            </h1>
             <p className="text-muted-foreground">Gerencie suas tarefas com eficiência</p>
           </div>
           
@@ -251,6 +288,11 @@ const Kanban = () => {
               <LayoutGrid className="mr-1 h-4 w-4" />
               {addColumnActive ? 'Salvar Coluna' : 'Adicionar Coluna'}
             </Button>
+            
+            <ThemeSelector
+              currentTheme={currentTheme}
+              onSelectTheme={handleThemeChange}
+            />
             
             <Button
               variant="outline"

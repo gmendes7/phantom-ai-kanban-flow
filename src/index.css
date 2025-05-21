@@ -25,6 +25,11 @@
     --input: 240 3.7% 15.9%;
     --ring: 240 4.9% 83.9%;
     --radius: 0.75rem;
+    
+    --kanban-todo-color: #6366f1;
+    --kanban-inprogress-color: #8b5cf6;
+    --kanban-review-color: #ec4899;
+    --kanban-done-color: #10b981;
   }
 
   .light {
@@ -70,6 +75,22 @@
   .ghost-task {
     @apply opacity-50 bg-accent;
   }
+  
+  .kanban-todo {
+    color: var(--kanban-todo-color);
+  }
+  
+  .kanban-inprogress {
+    color: var(--kanban-inprogress-color);
+  }
+  
+  .kanban-review {
+    color: var(--kanban-review-color);
+  }
+  
+  .kanban-done {
+    color: var(--kanban-done-color);
+  }
 }
 
 @layer components {
@@ -79,6 +100,22 @@
   
   .text-gradient {
     @apply bg-gradient-to-r from-phantom-400 to-phantom-600 bg-clip-text text-transparent;
+  }
+  
+  .animated-ghost {
+    animation: float 3s ease-in-out infinite;
+  }
+  
+  @keyframes float {
+    0% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+    100% {
+      transform: translateY(0px);
+    }
   }
 }
 

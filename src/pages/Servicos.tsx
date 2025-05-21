@@ -14,7 +14,8 @@ import {
   Zap, 
   Bot, 
   BarChart3, 
-  Layers 
+  Layers, 
+  Kanban
 } from 'lucide-react';
 import { 
   Card, 
@@ -25,10 +26,16 @@ import {
   CardTitle 
 } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import ChatbotWidget from '@/components/chatbot/ChatbotWidget';
 
 const Servicos = () => {
   return (
     <div className="min-h-screen flex flex-col">
+      {/* Chatbot no início da página */}
+      <div className="fixed top-20 right-4 z-50">
+        <ChatbotWidget />
+      </div>
+      
       {/* Cabeçalho com botão de voltar */}
       <header className="border-b border-border bg-background backdrop-blur-md sticky top-0 z-50">
         <div className="container mx-auto py-4 px-4 flex items-center justify-between">
@@ -134,6 +141,52 @@ const Servicos = () => {
                 <CardFooter>
                   <Link to="/contato" className="w-full">
                     <Button variant="outline" className="w-full">Solicitar Orçamento</Button>
+                  </Link>
+                </CardFooter>
+              </Card>
+            </div>
+          </section>
+          
+          {/* Nova Seção para Quadro Kanban */}
+          <section id="kanban" className="mb-20 scroll-mt-20">
+            <div className="flex items-center gap-3 mb-8">
+              <Kanban className="h-8 w-8 text-phantom-500" />
+              <h2 className="text-3xl font-bold">Quadro Kanban</h2>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-1 gap-8">
+              <Card className="hover:shadow-lg transition-all">
+                <CardHeader className="pb-4">
+                  <Kanban className="h-12 w-12 text-phantom-500 mb-4" />
+                  <CardTitle>Sistema Kanban Personalizado</CardTitle>
+                  <CardDescription>Organize suas tarefas com eficiência</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground mb-4">
+                    Nosso sistema Kanban oferece uma visualização clara e eficiente do fluxo de trabalho,
+                    permitindo organizar tarefas, definir prioridades e acompanhar o progresso com facilidade.
+                    Totalmente personalizável e intuitivo.
+                  </p>
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    <Badge variant="outline">Temas Personalizáveis</Badge>
+                    <Badge variant="outline">Suporte à IA</Badge>
+                    <Badge variant="outline">Colunas Ajustáveis</Badge>
+                    <Badge variant="outline">Analytics</Badge>
+                  </div>
+                  <div className="mt-4 bg-secondary/50 p-4 rounded-lg">
+                    <p className="font-medium mb-2">Principais recursos:</p>
+                    <ul className="list-disc pl-5 space-y-1">
+                      <li>Quadro intuitivo para visualização de tarefas</li>
+                      <li>Personalização completa de temas e cores</li>
+                      <li>Assistente de IA para sugestões e insights</li>
+                      <li>Gestão de prazos e prioridades</li>
+                      <li>Relatórios de produtividade</li>
+                    </ul>
+                  </div>
+                </CardContent>
+                <CardFooter>
+                  <Link to="/dashboard/kanban" className="w-full">
+                    <Button className="w-full">Experimentar Agora</Button>
                   </Link>
                 </CardFooter>
               </Card>
@@ -313,7 +366,7 @@ const Servicos = () => {
             
             <div className="mt-4 md:mt-0">
               <p className="text-sm text-muted-foreground">
-                &copy; 2025 Spectra. Todos os direitos reservados.
+                &copy; 2025 Spectra por <a href="https://github.com/schjneiderr" className="text-phantom-500 hover:underline">@schjneiderr</a> / <a href="https://github.com/g.mendes7" className="text-phantom-500 hover:underline">@trinitytecnologias</a>
               </p>
             </div>
           </div>
