@@ -10,7 +10,7 @@ const DashboardHeader = () => {
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <Ghost className="h-5 w-5 text-phantom-500 hidden sm:block" />
-          <h1 className="text-xl font-bold hidden md:block">Dashboard</h1>
+          <h1 className="text-xl font-bold hidden md:block">Painel</h1>
         </div>
         
         <div className="flex items-center space-x-3">

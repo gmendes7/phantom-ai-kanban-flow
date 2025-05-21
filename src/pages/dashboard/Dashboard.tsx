@@ -3,6 +3,7 @@ import { Outlet } from 'react-router-dom';
 import DashboardSidebar from '@/components/dashboard/DashboardSidebar';
 import DashboardHeader from '@/components/dashboard/DashboardHeader';
 import ChatbotWidget from '@/components/chatbot/ChatbotWidget';
+import ChangelogNotes from '@/components/dashboard/ChangelogNotes';
 import { Ghost } from 'lucide-react';
 
 const Dashboard = () => {
@@ -26,6 +27,7 @@ const Dashboard = () => {
         </main>
       </div>
       <ChatbotWidget />
+      <ChangelogNotes />
     </div>
   );
 };

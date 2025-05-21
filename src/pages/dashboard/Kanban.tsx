@@ -27,71 +27,71 @@ import KanbanColumn from '@/components/kanban/KanbanColumn';
 import AddTaskDialog from '@/components/kanban/AddTaskDialog';
 import { Task, KanbanColumn as ColumnType } from '@/types/kanban';
 
-// Sample initial data
+// Dados iniciais de exemplo
 const initialTasks: Task[] = [
   {
     id: '1',
-    title: 'Research competitors',
-    description: 'Analyze top 5 competitors in the market',
+    title: 'Pesquisar concorrentes',
+    description: 'Analisar os 5 principais concorrentes do mercado',
     status: 'todo',
     priority: 'medium',
     dueDate: '2023-06-15',
-    assignedTo: 'Demo User',
+    assignedTo: 'Usuário Demo',
     createdAt: '2023-06-01',
     predictedDeadline: '2023-06-18'
   },
   {
     id: '2',
-    title: 'Design landing page',
-    description: 'Create wireframes for the new landing page',
+    title: 'Design da página inicial',
+    description: 'Criar wireframes para a nova página inicial',
     status: 'todo',
     priority: 'high',
     dueDate: '2023-06-20',
-    assignedTo: 'Demo User',
+    assignedTo: 'Usuário Demo',
     createdAt: '2023-06-02',
     predictedDeadline: '2023-06-19'
   },
   {
     id: '3',
-    title: 'Implement authentication',
-    description: 'Add login and registration functionality',
+    title: 'Implementar autenticação',
+    description: 'Adicionar funcionalidade de login e registro',
     status: 'inprogress',
     priority: 'high',
     dueDate: '2023-06-18',
-    assignedTo: 'Demo User',
+    assignedTo: 'Usuário Demo',
     createdAt: '2023-06-03',
     predictedDeadline: '2023-06-17'
   },
   {
     id: '4',
-    title: 'Fix navigation bug',
-    description: 'Mobile menu does not close properly',
+    title: 'Corrigir bug de navegação',
+    description: 'Menu mobile não fecha corretamente',
     status: 'inprogress',
     priority: 'medium',
     dueDate: '2023-06-10',
-    assignedTo: 'Demo User',
+    assignedTo: 'Usuário Demo',
     createdAt: '2023-06-05',
     predictedDeadline: '2023-06-11'
   },
   {
     id: '5',
-    title: 'Write user documentation',
-    description: 'Create user guides for new features',
+    title: 'Escrever documentação',
+    description: 'Criar guias de usuário para os novos recursos',
     status: 'review',
     priority: 'low',
     dueDate: '2023-06-25',
-    assignedTo: 'Demo User',
+    assignedTo: 'Usuário Demo',
     createdAt: '2023-06-10',
     predictedDeadline: '2023-06-24'
   },
   {
     id: '6',
-    title: 'Test payment gateway',
-    description: 'Verify all payment flows work correctly',
+    title: 'Testar gateway de pagamento',
+    description: 'Verificar se todos os fluxos de pagamento funcionam corretamente',
     status: 'done',
     priority: 'high',
     dueDate: '2023-06-05',
-    assignedTo: 'Demo User',
+    assignedTo: 'Usuário Demo',
     createdAt: '2023-06-01',
     completedAt: '2023-06-04',
     predictedDeadline: '2023-06-07'
@@ -99,10 +99,10 @@ const initialTasks: Task[] = [
 ];
 
 const initialColumns: ColumnType[] = [
-  { id: 'todo', title: 'To Do', color: 'kanban-todo' },
-  { id: 'inprogress', title: 'In Progress', color: 'kanban-inprogress' },
-  { id: 'review', title: 'Review', color: 'kanban-review' },
-  { id: 'done', title: 'Done', color: 'kanban-done' }
+  { id: 'todo', title: 'A Fazer', color: 'kanban-todo' },
+  { id: 'inprogress', title: 'Em Progresso', color: 'kanban-inprogress' },
+  { id: 'review', title: 'Revisão', color: 'kanban-review' },
+  { id: 'done', title: 'Concluído', color: 'kanban-done' }
 ];
 
 const Kanban = () => {
@@ -114,20 +114,20 @@ const Kanban = () => {
   const [addColumnActive, setAddColumnActive] = useState(false);
   const newColumnInputRef = useRef<HTMLInputElement>(null);
   
-  // AI recommendations state (simulated)
+  // Estado de recomendações de IA (simulado)
   const [showRecommendations, setShowRecommendations] = useState(false);
   const recommendations = [
-    'You have 3 high priority tasks - consider focusing on those first',
-    'Based on past performance, "Design landing page" might take longer than estimated',
-    'Consider breaking down "Implement authentication" into smaller tasks'
+    'Você tem 3 tarefas de alta prioridade - considere focar nelas primeiro',
+    'Com base no desempenho anterior, "Design da página inicial" pode levar mais tempo que o estimado',
+    'Considere dividir "Implementar autenticação" em tarefas menores'
   ];
 
   const handleAddTask = (newTask: Omit<Task, 'id' | 'createdAt' | 'predictedDeadline'>) => {
     const id = Date.now().toString();
     const createdAt = new Date().toISOString().split('T')[0];
     
-    // Simulated AI prediction of deadline (in a real app this would come from an ML model)
-    // For demo, we'll just add a random number of days (1-7) to the due date
+    // Previsão simulada de prazo com IA (em um app real, viria de um modelo ML)
+    // Para demo, apenas adicionaremos um número aleatório de dias (1-7) à data de vencimento
     const dueDate = new Date(newTask.dueDate);
     const randomDays = Math.floor(Math.random() * 7) + 1;
     const predictedDate = new Date(dueDate);
@@ -142,19 +142,19 @@ const Kanban = () => {
     };
     
     setTasks([...tasks, task]);
-    toast.success('Task added successfully');
+    toast.success('Tarefa adicionada com sucesso');
   };
 
   const handleUpdateTask = (updatedTask: Task) => {
     setTasks(tasks.map(task => 
       task.id === updatedTask.id ? updatedTask : task
     ));
-    toast.success('Task updated successfully');
+    toast.success('Tarefa atualizada com sucesso');
   };
 
   const handleDeleteTask = (taskId: string) => {
     setTasks(tasks.filter(task => task.id !== taskId));
-    toast.success('Task deleted successfully');
+    toast.success('Tarefa excluída com sucesso');
   };
 
   const handleDragStart = (task: Task) => {
@@ -172,7 +172,7 @@ const Kanban = () => {
         task.id === draggedTask.id ? updatedTask : task
       ));
       
-      // If dropping in done column, add completion date
+      // Se soltar na coluna concluído, adicionar data de conclusão
       if (columnId === 'done' && !draggedTask.completedAt) {
         const completedTask = { 
           ...updatedTask, 
@@ -202,7 +202,7 @@ const Kanban = () => {
         
         setColumns([...columns, newColumn]);
         setAddColumnActive(false);
-        toast.success(`Added new column: ${title}`);
+        toast.success(`Nova coluna adicionada: ${title}`);
       }
     } else {
       setAddColumnActive(true);
@@ -213,16 +213,16 @@ const Kanban = () => {
   };
 
   const handleDeleteColumn = (columnId: string) => {
-    // Check if column has tasks
+    // Verificar se a coluna tem tarefas
     const hasTasks = tasks.some(task => task.status === columnId);
     
     if (hasTasks) {
-      toast.error('Cannot delete column with tasks');
+      toast.error('Não é possível excluir uma coluna com tarefas');
       return;
     }
     
     setColumns(columns.filter(column => column.id !== columnId));
-    toast.success('Column deleted successfully');
+    toast.success('Coluna excluída com sucesso');
   };
 
   return (
@@ -230,8 +230,8 @@ const Kanban = () => {
       <div className="mb-6">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
           <div>
-            <h1 className="text-2xl font-bold">Kanban Board</h1>
-            <p className="text-muted-foreground">Manage your tasks efficiently</p>
+            <h1 className="text-2xl font-bold">Quadro Kanban</h1>
+            <p className="text-muted-foreground">Gerencie suas tarefas com eficiência</p>
           </div>
           
           <div className="flex items-center gap-2">
@@ -240,7 +240,7 @@ const Kanban = () => {
               onClick={() => setAddTaskDialogOpen(true)}
             >
               <PlusIcon className="mr-1 h-4 w-4" />
-              Add Task
+              Adicionar Tarefa
             </Button>
             
             <Button
@@ -249,7 +249,7 @@ const Kanban = () => {
               onClick={handleAddColumn}
             >
               <LayoutGrid className="mr-1 h-4 w-4" />
-              {addColumnActive ? 'Save Column' : 'Add Column'}
+              {addColumnActive ? 'Salvar Coluna' : 'Adicionar Coluna'}
             </Button>
             
             <Button
@@ -258,19 +258,19 @@ const Kanban = () => {
               onClick={() => setShowRecommendations(!showRecommendations)}
             >
               <AlertTriangle className="mr-1 h-4 w-4" />
-              AI Insights
+              Insights IA
               {!showRecommendations && <Badge className="ml-1">3</Badge>}
             </Button>
           </div>
         </div>
         
-        {/* AI Recommendations */}
+        {/* Recomendações de IA */}
         {showRecommendations && (
           <Card className="mb-6 border-phantom-500/50 animate-fade-in">
             <CardHeader className="pb-2">
               <CardTitle className="text-sm font-medium flex items-center">
                 <AlertTriangle className="mr-2 h-4 w-4 text-phantom-500" />
-                AI Recommendations
+                Recomendações da IA
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -287,13 +287,13 @@ const Kanban = () => {
         )}
       </div>
       
-      {/* Column input when adding */}
+      {/* Input de coluna quando adicionando */}
       {addColumnActive && (
         <div className="mb-4 flex items-center">
           <input
             ref={newColumnInputRef}
             type="text"
-            placeholder="Column name"
+            placeholder="Nome da coluna"
             className="border border-border rounded-md px-3 py-2 mr-2 bg-secondary"
             onKeyDown={(e) => {
               if (e.key === 'Enter') handleAddColumn();
@@ -305,12 +305,12 @@ const Kanban = () => {
             size="sm" 
             onClick={() => setAddColumnActive(false)}
           >
-            Cancel
+            Cancelar
           </Button>
         </div>
       )}
       
-      {/* Kanban Board */}
+      {/* Quadro Kanban */}
       <div className="flex-1 overflow-x-auto pb-4">
         <div className="flex h-full gap-4">
           {columns.map(column => (
@@ -347,7 +347,7 @@ const Kanban = () => {
         </div>
       </div>
       
-      {/* Add/Edit Task Dialog */}
+      {/* Diálogo de Adicionar/Editar Tarefa */}
       <AddTaskDialog
         open={addTaskDialogOpen}
         onOpenChange={setAddTaskDialogOpen}

@@ -67,7 +67,7 @@ const KanbanColumn: React.FC<KanbanColumnProps> = ({
                 onClick={onDeleteColumn}
               >
                 <TrashIcon className="mr-2 h-4 w-4" />
-                Delete Column
+                Excluir Coluna
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

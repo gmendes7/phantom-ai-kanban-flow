@@ -25,7 +25,7 @@ const KanbanTask: React.FC<KanbanTaskProps> = ({
   onEdit,
   onDelete
 }) => {
-  // Get priority color
+  // Obter cor da prioridade
   const getPriorityColor = (priority: string) => {
     switch (priority) {
       case 'high':
@@ -39,13 +39,13 @@ const KanbanTask: React.FC<KanbanTaskProps> = ({
     }
   };
   
-  // Format date for display
+  // Formatar data para exibição
   const formatDate = (dateString: string) => {
     const options: Intl.DateTimeFormatOptions = { month: 'short', day: 'numeric' };
-    return new Date(dateString).toLocaleDateString('en-US', options);
+    return new Date(dateString).toLocaleDateString('pt-BR', options);
   };
   
-  // Check if task is overdue
+  // Verificar se a tarefa está atrasada
   const isOverdue = () => {
     if (task.status === 'done') return false;
     const today = new Date();
@@ -53,7 +53,7 @@ const KanbanTask: React.FC<KanbanTaskProps> = ({
     return today > dueDate;
   };
   
-  // Check if task is due soon (within next 2 days)
+  // Verificar se a tarefa está prestes a vencer (dentro dos próximos 2 dias)
   const isDueSoon = () => {
     if (task.status === 'done') return false;
     const today = new Date();
@@ -63,17 +63,31 @@ const KanbanTask: React.FC<KanbanTaskProps> = ({
     return diffDays > 0 && diffDays <= 2;
   };
   
-  // Analyze AI prediction vs actual due date
+  // Analisar previsão de IA vs data de vencimento real
   const getDueDateDifference = () => {
     const predicted = new Date(task.predictedDeadline);
     const actual = new Date(task.dueDate);
     const diffTime = predicted.getTime() - actual.getTime();
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     
-    if (diffDays === 0) return "On schedule";
+    if (diffDays === 0) return "No prazo";
     return diffDays > 0 
-      ? `${diffDays} day${diffDays !== 1 ? 's' : ''} buffer` 
-      : `${Math.abs(diffDays)} day${Math.abs(diffDays) !== 1 ? 's' : ''} tight`;
+      ? `${diffDays} dia${diffDays !== 1 ? 's' : ''} de folga` 
+      : `${Math.abs(diffDays)} dia${Math.abs(diffDays) !== 1 ? 's' : ''} apertado`;
+  };
+
+  // Traduzir prioridade para português
+  const getPriorityText = (priority: string) => {
+    switch (priority) {
+      case 'high':
+        return 'Alta';
+      case 'medium':
+        return 'Média';
+      case 'low':
+        return 'Baixa';
+      default:
+        return priority;
+    }
   };
 
   return (
@@ -96,14 +110,14 @@ const KanbanTask: React.FC<KanbanTaskProps> = ({
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuItem onClick={onEdit}>
-              Edit
+              Editar
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem
               className="text-destructive"
               onClick={onDelete}
             >
-              Delete
+              Excluir
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -117,20 +131,20 @@ const KanbanTask: React.FC<KanbanTaskProps> = ({
       
       <div className="flex flex-wrap gap-2 mb-2">
         <Badge variant="outline" className={getPriorityColor(task.priority)}>
-          {task.priority}
+          {getPriorityText(task.priority)}
         </Badge>
         
         {task.status === 'done' ? (
           <Badge variant="outline" className="text-kanban-done border-kanban-done">
-            Completed
+            Concluído
           </Badge>
         ) : isOverdue() ? (
           <Badge variant="outline" className="text-red-500 border-red-500">
-            Overdue
+            Atrasado
           </Badge>
         ) : isDueSoon() ? (
           <Badge variant="outline" className="text-yellow-500 border-yellow-500">
-            Due soon
+            Vence em breve
           </Badge>
         ) : null}
       </div>
@@ -150,10 +164,10 @@ const KanbanTask: React.FC<KanbanTaskProps> = ({
           </TooltipTrigger>
           <TooltipContent>
             <div className="space-y-1">
-              <p>Due: {new Date(task.dueDate).toLocaleDateString()}</p>
+              <p>Vencimento: {new Date(task.dueDate).toLocaleDateString('pt-BR')}</p>
               <div className="flex items-center text-xs">
                 <Clock9 className="h-3 w-3 mr-1 text-phantom-400" />
-                <span className="text-phantom-400">AI Prediction: {getDueDateDifference()}</span>
+                <span className="text-phantom-400">Previsão IA: {getDueDateDifference()}</span>
               </div>
             </div>
           </TooltipContent>
