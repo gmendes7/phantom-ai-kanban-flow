@@ -93,6 +93,13 @@ const Login = () => {
                   Register
                 </Link>
               </p>
+              <div className="border-t border-border pt-4 w-full">
+                <p className="text-center text-sm text-muted-foreground">
+                  <Link to="/admin/login" className="text-primary hover:underline">
+                    Acessar Painel Administrativo
+                  </Link>
+                </p>
+              </div>
             </CardFooter>
           </form>
         </Card>

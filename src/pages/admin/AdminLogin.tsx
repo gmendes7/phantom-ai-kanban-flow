@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { 
@@ -12,9 +12,10 @@ import {
   CardTitle 
 } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
-import { Ghost, Key } from 'lucide-react';
+import { Ghost, Key, AlertCircle } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { toast } from 'sonner';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 
 const AdminLogin = () => {
   const [email, setEmail] = useState('');
@@ -65,6 +66,13 @@ const AdminLogin = () => {
         </CardHeader>
         <form onSubmit={handleSubmit}>
           <CardContent className="space-y-4">
+            <Alert className="bg-blue-500/10 border-blue-500">
+              <AlertCircle className="h-4 w-4 text-blue-500" />
+              <AlertDescription>
+                Para demonstração, use: <strong>user@example.com / password</strong>
+              </AlertDescription>
+            </Alert>
+            
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
               <Input
@@ -90,7 +98,7 @@ const AdminLogin = () => {
               />
             </div>
           </CardContent>
-          <CardFooter>
+          <CardFooter className="flex-col space-y-4">
             <Button
               type="submit"
               className="w-full gap-2"
@@ -108,6 +116,12 @@ const AdminLogin = () => {
                 </>
               )}
             </Button>
+            
+            <p className="text-center text-sm text-muted-foreground">
+              <Link to="/login" className="text-primary hover:underline">
+                Voltar para login normal
+              </Link>
+            </p>
           </CardFooter>
         </form>
       </Card>
