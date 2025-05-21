@@ -2,7 +2,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { MessageCircle, Send, X, Minimize2, Maximize2 } from 'lucide-react';
+import { MessageCircle, Send, X, Minimize2, Maximize2, Ghost } from 'lucide-react';
 import { Message, ChatResponse } from '@/types/chatbot';
 import ChatbotMessage from './ChatbotMessage';
 
@@ -14,7 +14,7 @@ const ChatbotWidget = () => {
     {
       id: '1',
       role: 'system',
-      content: 'Hello! I am your Phantom AI assistant. How can I help you with your Kanban board today?'
+      content: 'Olá! Eu sou o assistente Phantom AI. Como posso ajudar você com seu quadro Kanban hoje?'
     }
   ]);
   const [isLoading, setIsLoading] = useState(false);
@@ -22,12 +22,12 @@ const ChatbotWidget = () => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   
-  // Scroll to bottom of messages when new message is added
+  // Scroll para o final das mensagens quando uma nova mensagem é adicionada
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
   
-  // Focus input when chat is opened
+  // Foca no input quando o chat é aberto
   useEffect(() => {
     if (isOpen && !isMinimized) {
       inputRef.current?.focus();
@@ -59,10 +59,10 @@ const ChatbotWidget = () => {
     setIsLoading(true);
     
     try {
-      // Simulate AI processing delay
+      // Simula o atraso do processamento da IA
       await new Promise(resolve => setTimeout(resolve, 1500));
       
-      // Get mock response based on user message
+      // Obtém resposta simulada com base na mensagem do usuário
       const botResponse = getMockResponse(message);
       
       setMessages(prev => [...prev, {
@@ -72,90 +72,90 @@ const ChatbotWidget = () => {
         links: botResponse.links
       }]);
     } catch (error) {
-      console.error('Error processing message:', error);
+      console.error('Erro ao processar mensagem:', error);
       setMessages(prev => [...prev, {
         id: (Date.now() + 1).toString(),
         role: 'system',
-        content: 'Sorry, I encountered an error processing your request. Please try again.'
+        content: 'Desculpe, encontrei um erro ao processar sua solicitação. Por favor, tente novamente.'
       }]);
     } finally {
       setIsLoading(false);
     }
   };
   
-  // Mock response function (in a real app, this would call an AI service)
+  // Função de resposta simulada (em um app real, isso chamaria um serviço de IA)
   const getMockResponse = (query: string): ChatResponse => {
     const userQueryLower = query.toLowerCase();
     
-    if (userQueryLower.includes('create') || userQueryLower.includes('add task') || userQueryLower.includes('nova tarefa')) {
+    if (userQueryLower.includes('criar') || userQueryLower.includes('adicionar tarefa') || userQueryLower.includes('nova tarefa')) {
       return {
-        text: 'To create a new task, click the "Add Task" button at the top right of the board. You can then fill in the task details including title, description, status, priority, and due date.',
+        text: 'Para criar uma nova tarefa, clique no botão "Adicionar Tarefa" no canto superior direito do quadro. Você pode então preencher os detalhes da tarefa, incluindo título, descrição, status, prioridade e data de vencimento.',
         links: [
           {
-            text: 'Add a task now',
+            text: 'Adicionar uma tarefa agora',
             action: '/dashboard/kanban'
           }
         ]
       };
     }
     
-    if (userQueryLower.includes('delete') || userQueryLower.includes('remove')) {
+    if (userQueryLower.includes('excluir') || userQueryLower.includes('apagar') || userQueryLower.includes('remover')) {
       return {
-        text: 'To delete a task, hover over the task card and click the three dots menu. Then select "Delete" from the dropdown menu. You can also delete a column if it has no tasks in it.',
+        text: 'Para excluir uma tarefa, passe o mouse sobre o cartão da tarefa e clique no menu de três pontos. Em seguida, selecione "Excluir" no menu suspenso. Você também pode excluir uma coluna se não houver tarefas nela.',
       };
     }
     
-    if (userQueryLower.includes('password') || userQueryLower.includes('senha')) {
+    if (userQueryLower.includes('senha') || userQueryLower.includes('password')) {
       return {
-        text: 'To reset your password, go to the login page and click on "Forgot password". Alternatively, you can change your password in the Settings page if you are already logged in.',
+        text: 'Para redefinir sua senha, vá para a página de login e clique em "Esqueceu a senha". Alternativamente, você pode alterar sua senha na página de Configurações se já estiver logado.',
         links: [
           {
-            text: 'Go to Settings',
+            text: 'Ir para Configurações',
             action: '/dashboard/settings'
           }
         ]
       };
     }
     
-    if (userQueryLower.includes('who') || userQueryLower.includes('created') || userQueryLower.includes('criou') || userQueryLower.includes('developer')) {
+    if (userQueryLower.includes('quem') || userQueryLower.includes('criou') || userQueryLower.includes('desenvolvedor')) {
       return {
-        text: 'This system was developed by @schjneiderr. You can find more information in the About section of the Settings page.',
+        text: 'Este sistema foi desenvolvido por @schjneiderr. Você pode encontrar mais informações na seção Sobre da página de Configurações.',
         links: [
           {
-            text: 'View About',
+            text: 'Ver Sobre',
             action: '/dashboard/settings'
           }
         ]
       };
     }
     
-    if (userQueryLower.includes('late') || userQueryLower.includes('overdue') || userQueryLower.includes('atrasada')) {
+    if (userQueryLower.includes('atrasada') || userQueryLower.includes('vencida') || userQueryLower.includes('prazo')) {
       return {
-        text: 'Tasks that are past their due date are marked as "Overdue" with a red badge. You can see them directly on your Kanban board.',
+        text: 'Tarefas que estão com o prazo vencido são marcadas como "Atrasadas" com um indicador vermelho. Você pode vê-las diretamente no seu quadro Kanban.',
       };
     }
     
-    if (userQueryLower.includes('ai') || userQueryLower.includes('predict') || userQueryLower.includes('suggestion')) {
+    if (userQueryLower.includes('ia') || userQueryLower.includes('previsão') || userQueryLower.includes('sugestão')) {
       return {
-        text: 'Our AI system analyzes your task history to provide deadline predictions and workflow suggestions. You can see AI insights by clicking the "AI Insights" button at the top of the Kanban board.',
+        text: 'Nosso sistema de IA analisa o histórico de suas tarefas para fornecer previsões de prazo e sugestões de fluxo de trabalho. Você pode ver os insights de IA clicando no botão "Insights IA" na parte superior do quadro Kanban.',
       };
     }
     
-    if (userQueryLower.includes('multiple') || userQueryLower.includes('boards') || userQueryLower.includes('mais quadros')) {
+    if (userQueryLower.includes('múltiplos') || userQueryLower.includes('quadros') || userQueryLower.includes('mais quadros')) {
       return {
-        text: 'Support for multiple boards is coming soon! We\'re working on this feature and it will be available in a future update.',
+        text: 'O suporte para múltiplos quadros está chegando em breve! Estamos trabalhando nesse recurso e ele estará disponível em uma atualização futura.',
       };
     }
     
-    // Default response
+    // Resposta padrão
     return {
-      text: 'I\'m your Phantom Kanban assistant. I can help you with creating tasks, managing your board, understanding AI features, or navigating the application. What would you like to know?'
+      text: 'Sou seu assistente Phantom Kanban. Posso ajudar você com a criação de tarefas, gerenciamento do seu quadro, entendimento dos recursos de IA ou navegação no aplicativo. O que você gostaria de saber?'
     };
   };
 
   return (
     <>
-      {/* Chatbot toggle button */}
+      {/* Botão de toggle do chatbot */}
       <Button
         className="fixed bottom-4 right-4 h-12 w-12 rounded-full shadow-lg"
         onClick={toggleChat}
@@ -163,7 +163,7 @@ const ChatbotWidget = () => {
         <MessageCircle size={20} />
       </Button>
       
-      {/* Chatbot panel */}
+      {/* Painel do chatbot */}
       {isOpen && (
         <div 
           className={`
@@ -172,9 +172,12 @@ const ChatbotWidget = () => {
             ${isMinimized ? 'h-12' : 'h-[450px]'}
           `}
         >
-          {/* Chat header */}
+          {/* Cabeçalho do chat */}
           <div className="p-3 bg-primary flex items-center justify-between">
-            <h3 className="font-medium text-primary-foreground">Phantom AI Assistant</h3>
+            <div className="flex items-center">
+              <Ghost className="mr-2 h-4 w-4 text-primary-foreground" />
+              <h3 className="font-medium text-primary-foreground">Assistente Phantom AI</h3>
+            </div>
             <div className="flex items-center space-x-1">
               <Button
                 variant="ghost"
@@ -195,10 +198,10 @@ const ChatbotWidget = () => {
             </div>
           </div>
           
-          {/* Chat content - conditionally render based on minimized state */}
+          {/* Conteúdo do chat - renderizado condicionalmente com base no estado minimizado */}
           {!isMinimized && (
             <>
-              {/* Messages container */}
+              {/* Contêiner de mensagens */}
               <div className="flex-1 p-3 overflow-y-auto bg-card">
                 <div className="space-y-4">
                   {messages.map(msg => (
@@ -217,13 +220,13 @@ const ChatbotWidget = () => {
                 </div>
               </div>
               
-              {/* Input area */}
+              {/* Área de input */}
               <form onSubmit={handleSendMessage} className="p-3 bg-card border-t border-border">
                 <div className="flex items-center">
                   <Input
                     ref={inputRef}
                     type="text"
-                    placeholder="Ask something..."
+                    placeholder="Pergunte algo..."
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
                     className="flex-1"

@@ -1,3 +1,4 @@
+
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { 
@@ -61,11 +62,27 @@ const Index = () => {
           
           <div className="mt-16 relative">
             <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent z-10 h-20 bottom-0 top-auto"></div>
-            <img 
-              src="https://i.imgur.com/8jIZ12h.png" 
-              alt="Phantom Kanban Screenshot" 
-              className="rounded-lg shadow-xl border border-border mx-auto"
-            />
+            <div className="relative glass-panel rounded-lg p-10 border border-border mx-auto max-w-4xl">
+              <Ghost className="absolute -top-10 -left-5 h-16 w-16 text-phantom-500 animate-bounce opacity-70" />
+              <Ghost className="absolute -bottom-10 -right-5 h-16 w-16 text-phantom-500 animate-pulse opacity-70" />
+              <div className="flex flex-col md:flex-row gap-6">
+                <div className="flex-1 glass-panel rounded-lg p-4">
+                  <h3 className="text-lg font-bold mb-2">Tarefas</h3>
+                  <div className="task-card">Pesquisar concorrentes</div>
+                  <div className="task-card">Design da landing page</div>
+                  <div className="task-card">Implementar autenticação</div>
+                </div>
+                <div className="flex-1 glass-panel rounded-lg p-4">
+                  <h3 className="text-lg font-bold mb-2">Em Progresso</h3>
+                  <div className="task-card">Corrigir bug de navegação</div>
+                </div>
+                <div className="flex-1 glass-panel rounded-lg p-4">
+                  <h3 className="text-lg font-bold mb-2">Concluído</h3>
+                  <div className="task-card">Testar gateway de pagamento</div>
+                </div>
+              </div>
+              <Ghost className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 h-32 w-32 text-phantom-500/10 animate-pulse" />
+            </div>
           </div>
         </div>
       </section>
@@ -89,7 +106,7 @@ const Index = () => {
               description="Arraste e solte tarefas, personalize colunas e organize seu fluxo de trabalho exatamente como você precisa."
             />
             <FeatureCard 
-              icon={<Ghost className="h-10 w-10 text-phantom-500" />}
+              icon={<Ghost className="h-10 w-10 text-phantom-500 animate-bounce" />}
               title="Assistente Inteligente"
               description="Obtenha ajuda e respostas sobre suas tarefas com nosso assistente de chat com IA."
             />
@@ -125,12 +142,27 @@ const Index = () => {
             
             <div className="glass-panel rounded-xl p-8 flex items-center justify-center">
               <div className="relative">
-                <img 
-                  src="https://i.imgur.com/nS1SsZB.png" 
-                  alt="Phantom Kanban Task View"
-                  className="rounded-lg max-w-full h-auto shadow-lg"
-                />
-                <Ghost className="absolute -top-10 -right-10 h-20 w-20 text-phantom-500 rotate-12 opacity-70" />
+                <div className="glass-panel rounded-lg p-6 shadow-lg">
+                  <h3 className="text-xl font-bold mb-4">Análise de Desempenho</h3>
+                  <p className="mb-4">Visão geral do progresso do seu projeto:</p>
+                  <div className="space-y-2">
+                    <div className="flex justify-between">
+                      <span>Tarefas concluídas</span>
+                      <span>75%</span>
+                    </div>
+                    <div className="w-full bg-secondary rounded-full h-2">
+                      <div className="bg-phantom-500 h-2 rounded-full" style={{ width: '75%' }}></div>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Prazo estimado</span>
+                      <span>12 dias</span>
+                    </div>
+                    <div className="w-full bg-secondary rounded-full h-2">
+                      <div className="bg-phantom-500 h-2 rounded-full" style={{ width: '60%' }}></div>
+                    </div>
+                  </div>
+                </div>
+                <Ghost className="absolute -top-10 -right-10 h-20 w-20 text-phantom-500 rotate-12 opacity-70 animate-bounce" />
               </div>
             </div>
           </div>
@@ -152,6 +184,9 @@ const Index = () => {
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
           </Link>
+          <div className="mt-8 relative">
+            <Ghost className="h-16 w-16 text-phantom-500/50 animate-bounce mx-auto" />
+          </div>
         </div>
       </section>
 
