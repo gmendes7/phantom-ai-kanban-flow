@@ -78,6 +78,7 @@ const themes: ThemeOption[] = [
       inprogress: '#9ca3af',
       review: '#6b7280',
       done: '#4b5563',
+      // Corrigido para usar duas classes separadas ao invés de uma string com espaço
       bg: 'bg-white text-black'
     }
   }

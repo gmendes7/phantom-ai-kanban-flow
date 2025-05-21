@@ -132,13 +132,21 @@ const Kanban = () => {
       // Remover todas as classes de tema anteriores
       themes.forEach(t => {
         if (t.colors.bg.startsWith('bg-')) {
-          body.classList.remove(t.colors.bg);
+          // Corrigindo o problema: separando classes com espaços em tokens individuais
+          const bgClasses = t.colors.bg.split(' ');
+          bgClasses.forEach(className => {
+            if (className) body.classList.remove(className);
+          });
         }
       });
       
       // Adicionar nova classe de tema
       if (selectedTheme.colors.bg.startsWith('bg-')) {
-        body.classList.add(selectedTheme.colors.bg);
+        // Adicionando as classes separadamente se contiver espaços
+        const newClasses = selectedTheme.colors.bg.split(' ');
+        newClasses.forEach(className => {
+          if (className) body.classList.add(className);
+        });
       }
     }
   }, [currentTheme]);
