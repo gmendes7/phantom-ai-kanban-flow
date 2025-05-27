@@ -134,7 +134,7 @@ const Register = () => {
                   Login
                 </Link>
               </p>
-            </CardContent>
+            </CardFooter>
           </form>
         </Card>
         
