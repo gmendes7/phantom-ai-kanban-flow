@@ -3,15 +3,15 @@ atualizzei o sistema de IA, e coloquei novos temas. ulitlizei meu bot, para inte
 
 ## Project info
 
-**URL**: https://lovable.dev/projects/ae560220-7cf9-4fc8-a979-a644490a195a
+https://phantom-ai-kanban-flow.vercel.app/
 
 ## How can I edit this code?
 
 There are several ways of editing your application.
 
-**Use Lovable**
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/ae560220-7cf9-4fc8-a979-a644490a195a) and start prompting.
+
+https://phantom-ai-kanban-flow.vercel.app/
 
 Changes made via Lovable will be committed automatically to this repo.
 
@@ -54,15 +54,11 @@ npm run dev
 ## What technologies are used for this project?
 
 This project is built with:
-
+usado por mim e minha IA e as seguintes linguagens 
 - Vite
 - TypeScript
 - React
 - shadcn-ui
 - Tailwind CSS
 
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/ae560220-7cf9-4fc8-a979-a644490a195a) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
+https://phantom-ai-kanban-flow.vercel.app/
