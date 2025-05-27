@@ -1,4 +1,3 @@
-
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import { toast } from 'sonner';
 
@@ -7,6 +6,16 @@ export interface User {
   id: string;
   name: string;
   email: string;
+  provider?: 'local' | 'google';
+}
+
+// Define registered users storage
+interface RegisteredUser {
+  id: string;
+  name: string;
+  email: string;
+  password: string;
+  provider: 'local' | 'google';
 }
 
 // Define auth context type
@@ -16,6 +25,7 @@ interface AuthContextType {
   isAuthenticated: boolean;
   loading: boolean;
   login: (email: string, password: string) => Promise<void>;
+  loginWithGoogle: () => Promise<void>;
   register: (name: string, email: string, password: string) => Promise<void>;
   forgotPassword: (email: string) => Promise<void>;
   resetPassword: (token: string, password: string) => Promise<void>;
@@ -29,11 +39,36 @@ const AuthContext = createContext<AuthContextType>({
   isAuthenticated: false,
   loading: true,
   login: async () => {},
+  loginWithGoogle: async () => {},
   register: async () => {},
   forgotPassword: async () => {},
   resetPassword: async () => {},
   logout: () => {},
 });
+
+// Helper functions for user storage
+const getStoredUsers = (): RegisteredUser[] => {
+  const stored = localStorage.getItem('registeredUsers');
+  return stored ? JSON.parse(stored) : [];
+};
+
+const saveUser = (user: RegisteredUser) => {
+  const users = getStoredUsers();
+  const existingIndex = users.findIndex(u => u.email === user.email);
+  
+  if (existingIndex >= 0) {
+    users[existingIndex] = user;
+  } else {
+    users.push(user);
+  }
+  
+  localStorage.setItem('registeredUsers', JSON.stringify(users));
+};
+
+const findUserByEmail = (email: string): RegisteredUser | null => {
+  const users = getStoredUsers();
+  return users.find(user => user.email === email) || null;
+};
 
 // Create provider component
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -54,35 +89,85 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setLoading(false);
   }, []);
 
-  // For demo purposes, we'll use localStorage to simulate JWT
-  // In a real app, you'd verify the token with your API
-  
   const login = async (email: string, password: string) => {
     try {
       // Simulate API call
-      // In a real app, you would make an actual API request
       await new Promise(resolve => setTimeout(resolve, 1000));
       
-      // Check credentials (mock validation)
-      if (email === 'user@example.com' && password === 'password') {
-        const mockUser = { id: '1', name: 'Demo User', email };
-        const mockToken = 'fake-jwt-token';
+      // Check stored users first
+      const storedUser = findUserByEmail(email);
+      if (storedUser && storedUser.password === password) {
+        const userForAuth = { 
+          id: storedUser.id, 
+          name: storedUser.name, 
+          email: storedUser.email,
+          provider: storedUser.provider 
+        };
+        const mockToken = `token-${storedUser.id}`;
         
-        // Store in state
-        setUser(mockUser);
+        setUser(userForAuth);
         setToken(mockToken);
         
-        // Store in localStorage
-        localStorage.setItem('user', JSON.stringify(mockUser));
+        localStorage.setItem('user', JSON.stringify(userForAuth));
         localStorage.setItem('token', mockToken);
         
-        toast.success('Logged in successfully!');
+        toast.success('Login realizado com sucesso!');
         return;
       }
       
-      throw new Error('Invalid credentials');
+      // Fallback to demo credentials
+      if (email === 'user@example.com' && password === 'password') {
+        const mockUser = { id: '1', name: 'Demo User', email, provider: 'local' as const };
+        const mockToken = 'fake-jwt-token';
+        
+        setUser(mockUser);
+        setToken(mockToken);
+        
+        localStorage.setItem('user', JSON.stringify(mockUser));
+        localStorage.setItem('token', mockToken);
+        
+        toast.success('Login realizado com sucesso!');
+        return;
+      }
+      
+      throw new Error('Credenciais inválidas');
     } catch (error) {
-      toast.error('Login failed. Please check your credentials.');
+      toast.error('Falha no login. Verifique suas credenciais.');
+      throw error;
+    }
+  };
+
+  const loginWithGoogle = async () => {
+    try {
+      // Simulate Google OAuth flow
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      
+      // Mock Google user data
+      const googleUser = {
+        id: `google-${Date.now()}`,
+        name: 'Usuário Google',
+        email: 'usuario@gmail.com',
+        provider: 'google' as const
+      };
+      
+      const mockToken = `google-token-${googleUser.id}`;
+      
+      // Save Google user to stored users
+      const registeredUser: RegisteredUser = {
+        ...googleUser,
+        password: '', // Google users don't have passwords
+      };
+      saveUser(registeredUser);
+      
+      setUser(googleUser);
+      setToken(mockToken);
+      
+      localStorage.setItem('user', JSON.stringify(googleUser));
+      localStorage.setItem('token', mockToken);
+      
+      toast.success('Login com Google realizado com sucesso!');
+    } catch (error) {
+      toast.error('Falha no login com Google. Tente novamente.');
       throw error;
     }
   };
@@ -92,21 +177,46 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1000));
       
-      // In a real app, you would send registration data to your API
-      const mockUser = { id: '1', name, email };
-      const mockToken = 'fake-jwt-token';
+      // Check if user already exists
+      const existingUser = findUserByEmail(email);
+      if (existingUser) {
+        throw new Error('Usuário já existe com este email');
+      }
       
-      // Store in state
-      setUser(mockUser);
+      // Create new user
+      const newUser: RegisteredUser = {
+        id: `user-${Date.now()}`,
+        name,
+        email,
+        password,
+        provider: 'local'
+      };
+      
+      // Save user to storage
+      saveUser(newUser);
+      
+      // Auto login after registration
+      const userForAuth = { 
+        id: newUser.id, 
+        name: newUser.name, 
+        email: newUser.email,
+        provider: newUser.provider 
+      };
+      const mockToken = `token-${newUser.id}`;
+      
+      setUser(userForAuth);
       setToken(mockToken);
       
-      // Store in localStorage
-      localStorage.setItem('user', JSON.stringify(mockUser));
+      localStorage.setItem('user', JSON.stringify(userForAuth));
       localStorage.setItem('token', mockToken);
       
-      toast.success('Registration successful!');
+      toast.success('Cadastro realizado com sucesso!');
     } catch (error) {
-      toast.error('Registration failed. Please try again.');
+      if (error instanceof Error && error.message === 'Usuário já existe com este email') {
+        toast.error('Já existe uma conta com este email.');
+      } else {
+        toast.error('Falha no cadastro. Tente novamente.');
+      }
       throw error;
     }
   };
@@ -146,7 +256,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     localStorage.removeItem('user');
     localStorage.removeItem('token');
     
-    toast.info('You have been logged out.');
+    toast.info('Você foi desconectado.');
   };
   
   return (
@@ -157,6 +267,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         isAuthenticated: !!user,
         loading,
         login,
+        loginWithGoogle,
         register,
         forgotPassword,
         resetPassword,
