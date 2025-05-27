@@ -3,16 +3,52 @@ import React, { useState } from 'react';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Bell, ClipboardCheck, Bug, Database, Paintbrush, X } from 'lucide-react';
+import { Bell, ClipboardCheck, Bug, Database, Paintbrush, X, Smartphone, Shield } from 'lucide-react';
 
 interface ChangelogEntry {
   date: string;
   title: string;
-  type: 'feature' | 'bugfix' | 'data' | 'visual';
+  type: 'feature' | 'bugfix' | 'data' | 'visual' | 'mobile';
   description: string;
+  author?: string;
 }
 
 const changelogData: ChangelogEntry[] = [
+  {
+    date: '27/05/2025',
+    title: 'Sistema de Cadastro de Usuários Implementado',
+    type: 'feature',
+    description: 'Implementação completa do sistema de registro e login com salvamento local das credenciais e integração com Google Login.',
+    author: '@schjneiderr'
+  },
+  {
+    date: '27/05/2025',
+    title: 'Melhorias de Responsividade Mobile',
+    type: 'mobile',
+    description: 'Design mobile-first implementado com breakpoints responsivos, botões maiores e melhor experiência de toque.',
+    author: '@schjneiderr'
+  },
+  {
+    date: '27/05/2025',
+    title: 'Sistema de Validação em Tempo Real',
+    type: 'feature',
+    description: 'Adicionada validação em tempo real nos formulários com feedback visual e mensagens de erro melhoradas.',
+    author: '@schjneiderr'
+  },
+  {
+    date: '27/05/2025',
+    title: 'Função "Mostrar Senha" Implementada',
+    type: 'visual',
+    description: 'Adicionado botão para visualizar/ocultar senha nos campos de login e registro com ícone de olho.',
+    author: '@schjneiderr'
+  },
+  {
+    date: '27/05/2025',
+    title: 'Integração com Google Login',
+    type: 'feature',
+    description: 'Implementação do login com Google através de botão dedicado e integração com AuthContext.',
+    author: '@schjneiderr'
+  },
   {
     date: '21/05/2025',
     title: 'Adição de Painel Admin',
@@ -90,6 +126,7 @@ const ChangelogNotes = () => {
       case 'bugfix': return <Bug className="h-4 w-4 text-red-500" />;
       case 'data': return <Database className="h-4 w-4 text-blue-500" />;
       case 'visual': return <Paintbrush className="h-4 w-4 text-purple-500" />;
+      case 'mobile': return <Smartphone className="h-4 w-4 text-orange-500" />;
       default: return <ClipboardCheck className="h-4 w-4" />;
     }
   };
@@ -100,6 +137,7 @@ const ChangelogNotes = () => {
       case 'bugfix': return 'Correção de Bug';
       case 'data': return 'Banco de Dados';
       case 'visual': return 'Visual';
+      case 'mobile': return 'Mobile';
       default: return 'Atualização';
     }
   };
@@ -148,6 +186,11 @@ const ChangelogNotes = () => {
                   <span className="bg-secondary text-xs px-2 py-0.5 rounded-full">
                     {getLabelForType(entry.type)}
                   </span>
+                  {entry.author && (
+                    <span className="bg-phantom-500/20 text-phantom-500 text-xs px-2 py-0.5 rounded-full">
+                      {entry.author}
+                    </span>
+                  )}
                 </div>
                 <p className="text-xs text-muted-foreground">{entry.description}</p>
               </div>
