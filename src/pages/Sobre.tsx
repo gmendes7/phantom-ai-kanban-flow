@@ -1,235 +1,294 @@
 
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Ghost, Github, Linkedin, Mail, ArrowLeft } from 'lucide-react';
 import { 
-  Card, 
-  CardContent, 
-  CardDescription, 
-  CardFooter, 
-  CardHeader, 
-  CardTitle 
-} from '@/components/ui/card';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+  Ghost, 
+  ArrowLeft, 
+  Brain, 
+  Zap, 
+  Users, 
+  Code, 
+  Heart,
+  Star,
+  MessageCircle,
+  Sparkles
+} from 'lucide-react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import AnimatedGhost from '@/components/ui/AnimatedGhost';
 
 const Sobre = () => {
   return (
-    <div className="min-h-screen flex flex-col">
-      {/* Cabeçalho com botão de voltar */}
-      <header className="border-b border-border bg-background backdrop-blur-md sticky top-0 z-50">
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-phantom-25 to-white">
+      {/* Header */}
+      <header className="border-b border-border bg-background/80 backdrop-blur-md sticky top-0 z-50">
         <div className="container mx-auto py-4 px-4 flex items-center justify-between">
           <Link to="/">
-            <Button variant="ghost" className="gap-2">
+            <Button variant="ghost" className="gap-2 hover:bg-phantom-100">
               <ArrowLeft size={16} /> Voltar
             </Button>
           </Link>
           <div className="flex items-center gap-2">
-            <Ghost className="h-8 w-8 text-phantom-500" />
+            <AnimatedGhost size={32} color="#8b5cf6" variant="pac-man" />
             <h1 className="text-2xl font-bold text-gradient">Spectra</h1>
           </div>
           <div className="w-[100px]"></div>
         </div>
       </header>
-      
+
+      {/* Fantasmas decorativos */}
+      <div className="fixed top-20 right-10 opacity-20 pointer-events-none z-0">
+        <AnimatedGhost size={128} color="#ec4899" variant="floating" />
+      </div>
+      <div className="fixed bottom-20 left-10 opacity-25 pointer-events-none z-0">
+        <AnimatedGhost size={96} color="#10b981" variant="pac-man" />
+      </div>
+      <div className="fixed top-1/2 right-1/4 opacity-15 pointer-events-none z-0">
+        <AnimatedGhost size={80} color="#f59e0b" variant="default" />
+      </div>
+
       {/* Conteúdo principal */}
-      <main className="flex-1 py-16">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto text-center mb-16">
-            <h1 className="text-4xl font-bold text-gradient mb-6">Sobre Nós</h1>
-            <p className="text-xl text-muted-foreground">
-              Somos uma equipe apaixonada por tecnologia e inovação, 
-              dedicada a criar soluções digitais que transformam negócios.
+      <main className="flex-1 py-8 relative z-10">
+        <div className="container mx-auto px-4 max-w-4xl">
+          
+          {/* Hero Section */}
+          <div className="text-center mb-16 animate-fade-in">
+            <div className="flex justify-center mb-6">
+              <AnimatedGhost size={120} color="#8b5cf6" variant="pac-man" />
+            </div>
+            <h1 className="text-4xl md:text-5xl font-bold text-gradient mb-6">
+              Conheça o Phantom AI
+            </h1>
+            <p className="text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto">
+              Uma inteligência artificial fantasminha que revoluciona o gerenciamento de projetos
+              com charme, diversão e eficiência.
             </p>
           </div>
-          
-          {/* Seção Missão e Visão */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-2xl text-gradient">Nossa Missão</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">
-                  Desenvolver soluções tecnológicas inovadoras e acessíveis que potencializem
-                  o crescimento dos nossos clientes, sempre com foco na qualidade e na experiência do usuário.
-                </p>
-              </CardContent>
-            </Card>
+
+          {/* Sobre a IA */}
+          <section className="mb-16">
+            <div className="flex items-center gap-3 mb-8 justify-center">
+              <Brain className="h-8 w-8 text-phantom-500" />
+              <h2 className="text-3xl font-bold">Sobre o Phantom AI</h2>
+            </div>
             
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-2xl text-gradient">Nossa Visão</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">
-                  Ser reconhecida como referência em desenvolvimento tecnológico, 
-                  criando produtos que façam a diferença na vida das pessoas e 
-                  no sucesso dos negócios.
-                </p>
-              </CardContent>
-            </Card>
-          </div>
-          
-          {/* Seção Equipe */}
-          <div className="mb-16">
-            <h2 className="text-3xl font-bold text-center mb-10">Nossa Equipe</h2>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <Card className="text-center hover:shadow-lg transition-all">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <Card className="hover:shadow-lg transition-all border-phantom-200">
                 <CardHeader>
-                  <div className="flex justify-center mb-4">
-                    <Avatar className="h-24 w-24">
-                      <AvatarFallback className="bg-phantom-500 text-2xl">GM</AvatarFallback>
-                    </Avatar>
+                  <div className="flex items-center gap-3">
+                    <Sparkles className="h-6 w-6 text-phantom-500" />
+                    <CardTitle>Inteligência Fantasminha</CardTitle>
                   </div>
-                  <CardTitle>Gabriel Mendes Lourenço</CardTitle>
-                  <CardDescription>Fundador & Dev Full Stack</CardDescription>
+                  <CardDescription>
+                    Uma IA amigável e divertida para guiar você
+                  </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-muted-foreground mb-4">
-                    18 anos, goiano, dono da tri.nity tecnologias. Desenvolvedor full stack 
-                    apaixonado por criar soluções inovadoras e eficientes.
-                  </p>
-                  <p className="text-sm text-muted-foreground">
-                    <span className="font-medium">@schjneiderr</span>
+                  <p className="text-muted-foreground leading-relaxed">
+                    O Phantom AI não é apenas um assistente virtual comum. Ele combina 
+                    a eficiência de uma IA moderna com a personalidade carismática 
+                    de um fantasminha do Pac-Man. Sempre pronto para ajudar com 
+                    dicas, sugestões e orientações para seu projeto.
                   </p>
                 </CardContent>
-                <CardFooter className="flex justify-center gap-4">
-                  <Button variant="ghost" size="icon">
-                    <Github size={20} />
-                  </Button>
-                  <Button variant="ghost" size="icon">
-                    <Linkedin size={20} />
-                  </Button>
-                  <Button variant="ghost" size="icon">
-                    <Mail size={20} />
-                  </Button>
-                </CardFooter>
               </Card>
-              
-              <Card className="text-center hover:shadow-lg transition-all">
+
+              <Card className="hover:shadow-lg transition-all border-phantom-200">
                 <CardHeader>
-                  <div className="flex justify-center mb-4">
-                    <Avatar className="h-24 w-24">
-                      <AvatarFallback className="bg-phantom-500/80 text-2xl">TT</AvatarFallback>
-                    </Avatar>
+                  <div className="flex items-center gap-3">
+                    <MessageCircle className="h-6 w-6 text-phantom-500" />
+                    <CardTitle>Conversação Natural</CardTitle>
                   </div>
-                  <CardTitle>Tri.nity Tecnologias</CardTitle>
-                  <CardDescription>Empresa de Tecnologia</CardDescription>
+                  <CardDescription>
+                    Interaja como se fosse um amigo fantasminha
+                  </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-muted-foreground mb-4">
-                    Empresa especializada em soluções tecnológicas inovadoras,
-                    focada em transformar ideias em realidade digital.
-                  </p>
-                  <p className="text-sm text-muted-foreground">
-                    <span className="font-medium">@tri.nitytecnologias</span>
-                  </p>
-                </CardContent>
-                <CardFooter className="flex justify-center gap-4">
-                  <Button variant="ghost" size="icon">
-                    <Github size={20} />
-                  </Button>
-                  <Button variant="ghost" size="icon">
-                    <Linkedin size={20} />
-                  </Button>
-                  <Button variant="ghost" size="icon">
-                    <Mail size={20} />
-                  </Button>
-                </CardFooter>
-              </Card>
-              
-              <Card className="text-center hover:shadow-lg transition-all border-dashed">
-                <CardHeader>
-                  <div className="flex justify-center mb-4">
-                    <Avatar className="h-24 w-24">
-                      <AvatarFallback className="bg-secondary text-2xl">+</AvatarFallback>
-                    </Avatar>
-                  </div>
-                  <CardTitle>Faça Parte da Equipe</CardTitle>
-                  <CardDescription>Estamos contratando!</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-muted-foreground mb-4">
-                    Procuramos talentos apaixonados por tecnologia para se juntar à nossa equipe 
-                    e ajudar a construir o futuro digital.
+                  <p className="text-muted-foreground leading-relaxed">
+                    Desenvolvido para entender suas necessidades de forma natural, 
+                    o Phantom AI responde perguntas sobre o sistema, oferece dicas 
+                    de produtividade e até mesmo conta curiosidades sobre o projeto. 
+                    É como ter um guia fantasma sempre ao seu lado!
                   </p>
                 </CardContent>
-                <CardFooter>
-                  <Link to="/contato" className="w-full">
-                    <Button className="w-full">Entre em Contato</Button>
-                  </Link>
-                </CardFooter>
               </Card>
             </div>
-          </div>
-          
-          {/* Seção valores */}
-          <div className="max-w-3xl mx-auto">
-            <h2 className="text-3xl font-bold text-center mb-8">Nossos Valores</h2>
-            <div className="space-y-6">
-              <div className="flex items-start gap-4">
-                <div className="h-10 w-10 rounded-full bg-phantom-500/20 flex items-center justify-center text-phantom-500">
-                  1
+          </section>
+
+          {/* Sobre a Spectra */}
+          <section className="mb-16">
+            <div className="flex items-center gap-3 mb-8 justify-center">
+              <Ghost className="h-8 w-8 text-phantom-500" />
+              <h2 className="text-3xl font-bold">A Plataforma Spectra</h2>
+            </div>
+            
+            <Card className="border-phantom-200 bg-gradient-to-br from-phantom-50 to-white">
+              <CardHeader className="text-center">
+                <CardTitle className="text-2xl">Phantom AI Kanban Flow</CardTitle>
+                <CardDescription className="text-lg">
+                  O futuro do gerenciamento de projetos chegou
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <p className="text-muted-foreground leading-relaxed text-center">
+                  A Spectra é uma plataforma revolucionária que combina a simplicidade 
+                  do método Kanban com o poder da inteligência artificial. Criada para 
+                  tornar o gerenciamento de projetos mais eficiente, divertido e intuitivo.
+                </p>
+                
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
+                  <div className="text-center p-4">
+                    <Zap className="h-8 w-8 text-phantom-500 mx-auto mb-2" />
+                    <h4 className="font-semibold mb-2">Produtividade</h4>
+                    <p className="text-sm text-muted-foreground">
+                      Organize tarefas com eficiência máxima
+                    </p>
+                  </div>
+                  
+                  <div className="text-center p-4">
+                    <Brain className="h-8 w-8 text-phantom-500 mx-auto mb-2" />
+                    <h4 className="font-semibold mb-2">IA Integrada</h4>
+                    <p className="text-sm text-muted-foreground">
+                      Assistente inteligente sempre disponível
+                    </p>
+                  </div>
+                  
+                  <div className="text-center p-4">
+                    <Heart className="h-8 w-8 text-phantom-500 mx-auto mb-2" />
+                    <h4 className="font-semibold mb-2">Experiência</h4>
+                    <p className="text-sm text-muted-foreground">
+                      Interface divertida e fácil de usar
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="text-xl font-medium mb-2">Inovação</h3>
-                  <p className="text-muted-foreground">
-                    Buscamos constantemente novas tecnologias e abordagens para oferecer
-                    soluções de ponta aos nossos clientes.
-                  </p>
+              </CardContent>
+            </Card>
+          </section>
+
+          {/* Criador */}
+          <section className="mb-16">
+            <div className="flex items-center gap-3 mb-8 justify-center">
+              <Code className="h-8 w-8 text-phantom-500" />
+              <h2 className="text-3xl font-bold">Quem Criou</h2>
+            </div>
+            
+            <Card className="border-phantom-200">
+              <CardHeader className="text-center">
+                <div className="flex justify-center mb-4">
+                  <div className="w-20 h-20 rounded-full bg-gradient-to-br from-phantom-500 to-phantom-600 flex items-center justify-center">
+                    <Users className="h-10 w-10 text-white" />
+                  </div>
                 </div>
-              </div>
-              
-              <div className="flex items-start gap-4">
-                <div className="h-10 w-10 rounded-full bg-phantom-500/20 flex items-center justify-center text-phantom-500">
-                  2
+                <CardTitle className="text-2xl">Gabriel Mendes (@schjneiderr)</CardTitle>
+                <CardDescription className="text-lg">
+                  Fundador da Trinity Tecnologias
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="flex flex-wrap gap-2 justify-center mb-4">
+                  <Badge variant="secondary">18 anos</Badge>
+                  <Badge variant="secondary">Desenvolvedor Full-Stack</Badge>
+                  <Badge variant="secondary">Trinity Tecnologias</Badge>
+                  <Badge variant="secondary">Inovação</Badge>
                 </div>
-                <div>
-                  <h3 className="text-xl font-medium mb-2">Qualidade</h3>
-                  <p className="text-muted-foreground">
-                    Comprometimento com a excelência em todos os aspectos do nosso trabalho,
-                    desde o código até a experiência do usuário.
-                  </p>
+                
+                <p className="text-muted-foreground leading-relaxed text-center">
+                  Desenvolvedor apaixonado por tecnologia e inovação, Gabriel criou a 
+                  Spectra aos 18 anos como parte da visão da Trinity Tecnologias de 
+                  revolucionar a forma como as pessoas gerenciam seus projetos. 
+                  Com foco em experiência do usuário e tecnologias modernas.
+                </p>
+                
+                <div className="text-center mt-6">
+                  <Link to="/contato">
+                    <Button className="bg-phantom-600 hover:bg-phantom-700">
+                      Entre em Contato
+                    </Button>
+                  </Link>
                 </div>
-              </div>
-              
-              <div className="flex items-start gap-4">
-                <div className="h-10 w-10 rounded-full bg-phantom-500/20 flex items-center justify-center text-phantom-500">
-                  3
-                </div>
-                <div>
-                  <h3 className="text-xl font-medium mb-2">Colaboração</h3>
-                  <p className="text-muted-foreground">
-                    Acreditamos no poder do trabalho em equipe e na parceria
-                    próxima com nossos clientes para alcançar resultados excepcionais.
-                  </p>
-                </div>
-              </div>
-              
-              <div className="flex items-start gap-4">
-                <div className="h-10 w-10 rounded-full bg-phantom-500/20 flex items-center justify-center text-phantom-500">
-                  4
-                </div>
-                <div>
-                  <h3 className="text-xl font-medium mb-2">Transparência</h3>
-                  <p className="text-muted-foreground">
-                    Comunicação clara e honesta em todos os níveis, tanto internamente
-                    quanto com nossos clientes e parceiros.
-                  </p>
-                </div>
-              </div>
+              </CardContent>
+            </Card>
+          </section>
+
+          {/* Recursos */}
+          <section className="mb-16">
+            <div className="flex items-center gap-3 mb-8 justify-center">
+              <Star className="h-8 w-8 text-phantom-500" />
+              <h2 className="text-3xl font-bold">Principais Recursos</h2>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[
+                {
+                  title: "Quadro Kanban Inteligente",
+                  description: "Organize tarefas com drag & drop e insights de IA"
+                },
+                {
+                  title: "Phantom AI Assistant",
+                  description: "Fantasminha que ajuda e orienta em tempo real"
+                },
+                {
+                  title: "Temas Personalizáveis",
+                  description: "Cores vibrantes inspiradas no mundo dos fantasmas"
+                },
+                {
+                  title: "Mobile First",
+                  description: "Otimizado para dispositivos móveis e tablets"
+                },
+                {
+                  title: "Animações Divertidas",
+                  description: "Fantasmas que reagem ao movimento do mouse"
+                },
+                {
+                  title: "Notificações Inteligentes",
+                  description: "Sistema de alertas e dicas personalizadas"
+                }
+              ].map((feature, index) => (
+                <Card key={index} className="hover:shadow-lg transition-all border-phantom-200">
+                  <CardHeader>
+                    <CardTitle className="text-lg">{feature.title}</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-muted-foreground text-sm">
+                      {feature.description}
+                    </p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </section>
+
+          {/* CTA */}
+          <div className="bg-gradient-to-r from-phantom-500/20 to-phantom-600/30 rounded-xl p-8 text-center">
+            <div className="flex justify-center mb-4">
+              <AnimatedGhost size={64} color="#8b5cf6" variant="pac-man" />
+            </div>
+            <h2 className="text-2xl font-bold mb-4">Pronto para conhecer o Phantom AI?</h2>
+            <p className="text-muted-foreground mb-6 max-w-md mx-auto">
+              Experimente agora mesmo o quadro Kanban mais divertido e eficiente que você já viu!
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link to="/dashboard/kanban">
+                <Button size="lg" className="bg-phantom-600 hover:bg-phantom-700">
+                  Experimentar Quadro Kanban
+                </Button>
+              </Link>
+              <Link to="/servicos">
+                <Button variant="outline" size="lg">
+                  Ver Nossos Serviços
+                </Button>
+              </Link>
             </div>
           </div>
         </div>
       </main>
       
       {/* Footer */}
-      <footer className="py-8 border-t border-border">
+      <footer className="py-8 border-t border-border bg-background/50 backdrop-blur-sm relative z-10">
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="flex items-center gap-2 mb-4 md:mb-0">
-              <Ghost className="h-6 w-6 text-phantom-500" />
+              <AnimatedGhost size={24} color="#8b5cf6" variant="pac-man" />
               <span className="text-xl font-bold text-gradient">Spectra</span>
             </div>
             
@@ -250,7 +309,10 @@ const Sobre = () => {
             
             <div className="mt-4 md:mt-0">
               <p className="text-sm text-muted-foreground">
-                &copy; 2025 Spectra. Todos os direitos reservados.
+                &copy; 2025 Spectra por{' '}
+                <a href="https://github.com/schjneiderr" className="text-phantom-500 hover:underline">
+                  @schjneiderr
+                </a>
               </p>
             </div>
           </div>

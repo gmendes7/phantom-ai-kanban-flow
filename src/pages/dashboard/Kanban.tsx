@@ -5,7 +5,9 @@ import {
   Calendar,
   AlertTriangle,
   Check,
-  Ghost
+  Ghost,
+  ChevronLeft,
+  ChevronRight
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -104,7 +106,10 @@ const Kanban = () => {
   const [addColumnActive, setAddColumnActive] = useState(false);
   const [currentTheme, setCurrentTheme] = useState('purple');
   const [themeColors, setThemeColors] = useState(themes[0].colors);
+  const [isMobileView, setIsMobileView] = useState(false);
+  const [currentColumnIndex, setCurrentColumnIndex] = useState(0);
   const newColumnInputRef = useRef<HTMLInputElement>(null);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
   
   // Estado de recomendações de IA (simulado)
   const [showRecommendations, setShowRecommendations] = useState(false);
@@ -113,6 +118,17 @@ const Kanban = () => {
     'Com base no desempenho anterior, "Design da página inicial" pode levar mais tempo que o estimado',
     'Considere dividir "Implementar autenticação" em tarefas menores'
   ];
+
+  // Detectar se é mobile
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobileView(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   // Efeito para aplicar cores do tema
   useEffect(() => {
@@ -266,6 +282,27 @@ const Kanban = () => {
     }
   }, []);
 
+  // Navegação mobile entre colunas
+  const goToPreviousColumn = () => {
+    setCurrentColumnIndex(Math.max(0, currentColumnIndex - 1));
+  };
+
+  const goToNextColumn = () => {
+    setCurrentColumnIndex(Math.min(columns.length - 1, currentColumnIndex + 1));
+  };
+
+  // Smooth scroll para colunas no desktop
+  const scrollToColumn = (index: number) => {
+    if (scrollContainerRef.current && !isMobileView) {
+      const columnWidth = 320;
+      const scrollPosition = index * (columnWidth + 16);
+      scrollContainerRef.current.scrollTo({
+        left: scrollPosition,
+        behavior: 'smooth'
+      });
+    }
+  };
+
   return (
     <div className={`h-full flex flex-col ${themeColors.bg.startsWith('bg-') ? themeColors.bg : ''}`}>
       <div className="mb-4 sm:mb-6">
@@ -278,18 +315,18 @@ const Kanban = () => {
             <p className="text-sm sm:text-base text-muted-foreground">Gerencie suas tarefas com eficiência</p>
           </div>
           
-          {/* Botões reorganizados para mobile */}
-          <div className="flex flex-col sm:flex-row gap-2 sm:gap-2">
+          {/* Controles reorganizados para mobile */}
+          <div className="flex flex-col sm:flex-row gap-2">
             <Button
               size="sm"
               onClick={() => setAddTaskDialogOpen(true)}
-              className="w-full sm:w-auto"
+              className="w-full sm:w-auto order-1"
             >
               <PlusIcon className="mr-1 h-4 w-4" />
               Adicionar Tarefa
             </Button>
             
-            <div className="flex gap-2">
+            <div className="flex gap-2 order-2">
               <Button
                 variant="outline"
                 size="sm"
@@ -367,42 +404,139 @@ const Kanban = () => {
         </div>
       )}
       
-      {/* Quadro Kanban - Melhorado para mobile */}
-      <div className="flex-1 overflow-x-auto pb-4">
-        <div className="flex h-full gap-2 sm:gap-4 min-w-max">
-          {columns.map(column => (
-            <div key={column.id} className="min-w-[280px] sm:min-w-[320px]">
-              <KanbanColumn
-                id={column.id}
-                title={column.title}
-                color={column.color}
-                onDragOver={handleDragOver}
-                onDrop={() => handleDrop(column.id)}
-                onAddTask={() => {
-                  setEditingTask(null);
-                  setAddTaskDialogOpen(true);
-                }}
-                onDeleteColumn={() => handleDeleteColumn(column.id)}
-              >
-                {tasks
-                  .filter(task => task.status === column.id)
-                  .map(task => (
-                    <KanbanTask
-                      key={task.id}
-                      task={task}
-                      onDragStart={() => handleDragStart(task)}
-                      onEdit={() => {
-                        setEditingTask(task);
-                        setAddTaskDialogOpen(true);
-                      }}
-                      onDelete={() => handleDeleteTask(task.id)}
-                    />
-                  ))
-                }
-              </KanbanColumn>
-            </div>
+      {/* Mobile Navigation */}
+      {isMobileView && (
+        <div className="flex items-center justify-between mb-4 bg-background/80 backdrop-blur-sm rounded-lg p-3 border">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={goToPreviousColumn}
+            disabled={currentColumnIndex === 0}
+            className="h-8 w-8 p-0"
+          >
+            <ChevronLeft className="h-4 w-4" />
+          </Button>
+          
+          <div className="flex items-center gap-2">
+            <span className="text-sm font-medium">
+              {columns[currentColumnIndex]?.title}
+            </span>
+            <Badge variant="secondary" className="text-xs">
+              {currentColumnIndex + 1} / {columns.length}
+            </Badge>
+          </div>
+          
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={goToNextColumn}
+            disabled={currentColumnIndex === columns.length - 1}
+            className="h-8 w-8 p-0"
+          >
+            <ChevronRight className="h-4 w-4" />
+          </Button>
+        </div>
+      )}
+      
+      {/* Indicadores de colunas para mobile */}
+      {isMobileView && (
+        <div className="flex justify-center gap-1 mb-4">
+          {columns.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentColumnIndex(index)}
+              className={`h-2 w-8 rounded-full transition-all ${
+                index === currentColumnIndex 
+                  ? 'bg-phantom-500' 
+                  : 'bg-muted-foreground/30'
+              }`}
+            />
           ))}
         </div>
+      )}
+      
+      {/* Quadro Kanban - Mobile First Design */}
+      <div className="flex-1 overflow-hidden pb-4">
+        {isMobileView ? (
+          /* Layout Mobile - Uma coluna por vez */
+          <div className="h-full">
+            {columns[currentColumnIndex] && (
+              <div className="h-full">
+                <KanbanColumn
+                  id={columns[currentColumnIndex].id}
+                  title={columns[currentColumnIndex].title}
+                  color={columns[currentColumnIndex].color}
+                  onDragOver={handleDragOver}
+                  onDrop={() => handleDrop(columns[currentColumnIndex].id)}
+                  onAddTask={() => {
+                    setEditingTask(null);
+                    setAddTaskDialogOpen(true);
+                  }}
+                  onDeleteColumn={() => handleDeleteColumn(columns[currentColumnIndex].id)}
+                  isMobile={true}
+                >
+                  {tasks
+                    .filter(task => task.status === columns[currentColumnIndex].id)
+                    .map(task => (
+                      <KanbanTask
+                        key={task.id}
+                        task={task}
+                        onDragStart={() => handleDragStart(task)}
+                        onEdit={() => {
+                          setEditingTask(task);
+                          setAddTaskDialogOpen(true);
+                        }}
+                        onDelete={() => handleDeleteTask(task.id)}
+                        isMobile={true}
+                      />
+                    ))
+                  }
+                </KanbanColumn>
+              </div>
+            )}
+          </div>
+        ) : (
+          /* Layout Desktop - Scroll horizontal */
+          <div 
+            ref={scrollContainerRef}
+            className="flex h-full gap-4 overflow-x-auto pb-4 scroll-smooth"
+            style={{ scrollbarWidth: 'thin' }}
+          >
+            {columns.map((column, index) => (
+              <div key={column.id} className="min-w-[320px] flex-shrink-0">
+                <KanbanColumn
+                  id={column.id}
+                  title={column.title}
+                  color={column.color}
+                  onDragOver={handleDragOver}
+                  onDrop={() => handleDrop(column.id)}
+                  onAddTask={() => {
+                    setEditingTask(null);
+                    setAddTaskDialogOpen(true);
+                  }}
+                  onDeleteColumn={() => handleDeleteColumn(column.id)}
+                  onFocus={() => scrollToColumn(index)}
+                >
+                  {tasks
+                    .filter(task => task.status === column.id)
+                    .map(task => (
+                      <KanbanTask
+                        key={task.id}
+                        task={task}
+                        onDragStart={() => handleDragStart(task)}
+                        onEdit={() => {
+                          setEditingTask(task);
+                          setAddTaskDialogOpen(true);
+                        }}
+                        onDelete={() => handleDeleteTask(task.id)}
+                      />
+                    ))
+                  }
+                </KanbanColumn>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
       
       {/* Diálogo de Adicionar/Editar Tarefa */}
