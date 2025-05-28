@@ -2,9 +2,9 @@
 import { Outlet } from 'react-router-dom';
 import DashboardSidebar from '@/components/dashboard/DashboardSidebar';
 import DashboardHeader from '@/components/dashboard/DashboardHeader';
-import ChatbotWidget from '@/components/chatbot/ChatbotWidget';
+import DraggableChatbotWidget from '@/components/chatbot/DraggableChatbotWidget';
 import ChangelogNotes from '@/components/dashboard/ChangelogNotes';
-import { Ghost } from 'lucide-react';
+import AnimatedGhost from '@/components/ui/AnimatedGhost';
 
 const Dashboard = () => {
   return (
@@ -15,13 +15,19 @@ const Dashboard = () => {
         <main className="flex-1 overflow-auto p-4 lg:p-6 relative">
           {/* Fantasmas animados decorativos - hidden on mobile */}
           <div className="absolute top-16 right-16 opacity-5 pointer-events-none hidden lg:block">
-            <Ghost className="h-64 w-64 text-phantom-500" />
+            <AnimatedGhost size={256} color="#8b5cf6" />
           </div>
           <div className="absolute bottom-8 left-8 opacity-10 pointer-events-none hidden md:block">
-            <Ghost className="h-32 w-32 text-phantom-500 animate-bounce" />
+            <AnimatedGhost size={128} color="#ec4899" className="animate-bounce" />
           </div>
           <div className="absolute top-1/4 left-1/4 opacity-5 pointer-events-none hidden xl:block">
-            <Ghost className="h-24 w-24 text-phantom-500 animate-pulse" />
+            <AnimatedGhost size={96} color="#10b981" className="animate-pulse" />
+          </div>
+          <div className="absolute top-1/3 right-1/3 opacity-10 pointer-events-none hidden lg:block">
+            <AnimatedGhost size={80} color="#f59e0b" />
+          </div>
+          <div className="absolute bottom-1/4 right-1/4 opacity-5 pointer-events-none hidden xl:block">
+            <AnimatedGhost size={112} color="#ef4444" />
           </div>
           
           {/* Main content with proper mobile spacing */}
@@ -30,7 +36,7 @@ const Dashboard = () => {
           </div>
         </main>
       </div>
-      <ChatbotWidget />
+      <DraggableChatbotWidget />
       <ChangelogNotes />
     </div>
   );

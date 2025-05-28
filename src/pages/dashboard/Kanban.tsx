@@ -1,4 +1,3 @@
-
 import { useState, useRef, useEffect } from 'react';
 import { 
   PlusIcon, 
@@ -269,54 +268,61 @@ const Kanban = () => {
 
   return (
     <div className={`h-full flex flex-col ${themeColors.bg.startsWith('bg-') ? themeColors.bg : ''}`}>
-      <div className="mb-6">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+      <div className="mb-4 sm:mb-6">
+        <div className="flex flex-col gap-4 mb-4 sm:mb-6">
           <div>
-            <h1 className="text-2xl font-bold flex items-center">
-              <Ghost className="mr-2 h-6 w-6 text-phantom-500 animate-pulse" />
+            <h1 className="text-xl sm:text-2xl font-bold flex items-center">
+              <Ghost className="mr-2 h-5 w-5 sm:h-6 sm:w-6 text-phantom-500 animate-pulse" />
               Quadro Kanban
             </h1>
-            <p className="text-muted-foreground">Gerencie suas tarefas com eficiência</p>
+            <p className="text-sm sm:text-base text-muted-foreground">Gerencie suas tarefas com eficiência</p>
           </div>
           
-          <div className="flex items-center gap-2">
+          {/* Botões reorganizados para mobile */}
+          <div className="flex flex-col sm:flex-row gap-2 sm:gap-2">
             <Button
               size="sm"
               onClick={() => setAddTaskDialogOpen(true)}
+              className="w-full sm:w-auto"
             >
               <PlusIcon className="mr-1 h-4 w-4" />
               Adicionar Tarefa
             </Button>
             
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={handleAddColumn}
-            >
-              <LayoutGrid className="mr-1 h-4 w-4" />
-              {addColumnActive ? 'Salvar Coluna' : 'Adicionar Coluna'}
-            </Button>
-            
-            <ThemeSelector
-              currentTheme={currentTheme}
-              onSelectTheme={handleThemeChange}
-            />
-            
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setShowRecommendations(!showRecommendations)}
-            >
-              <AlertTriangle className="mr-1 h-4 w-4" />
-              Insights IA
-              {!showRecommendations && <Badge className="ml-1">3</Badge>}
-            </Button>
+            <div className="flex gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleAddColumn}
+                className="flex-1 sm:flex-initial"
+              >
+                <LayoutGrid className="mr-1 h-4 w-4" />
+                {addColumnActive ? 'Salvar' : 'Nova Coluna'}
+              </Button>
+              
+              <ThemeSelector
+                currentTheme={currentTheme}
+                onSelectTheme={handleThemeChange}
+              />
+              
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setShowRecommendations(!showRecommendations)}
+                className="flex-1 sm:flex-initial"
+              >
+                <AlertTriangle className="mr-1 h-4 w-4" />
+                <span className="hidden sm:inline">Insights IA</span>
+                <span className="sm:hidden">IA</span>
+                {!showRecommendations && <Badge className="ml-1 text-xs">3</Badge>}
+              </Button>
+            </div>
           </div>
         </div>
         
         {/* Recomendações de IA */}
         {showRecommendations && (
-          <Card className="mb-6 border-phantom-500/50 animate-fade-in">
+          <Card className="mb-4 sm:mb-6 border-phantom-500/50 animate-fade-in">
             <CardHeader className="pb-2">
               <CardTitle className="text-sm font-medium flex items-center">
                 <AlertTriangle className="mr-2 h-4 w-4 text-phantom-500" />
@@ -327,8 +333,8 @@ const Kanban = () => {
               <ul className="space-y-2">
                 {recommendations.map((rec, index) => (
                   <li key={index} className="flex items-start">
-                    <Check className="mr-2 h-4 w-4 text-phantom-500 mt-0.5" />
-                    <span className="text-sm">{rec}</span>
+                    <Check className="mr-2 h-4 w-4 text-phantom-500 mt-0.5 flex-shrink-0" />
+                    <span className="text-xs sm:text-sm">{rec}</span>
                   </li>
                 ))}
               </ul>
@@ -339,12 +345,12 @@ const Kanban = () => {
       
       {/* Input de coluna quando adicionando */}
       {addColumnActive && (
-        <div className="mb-4 flex items-center">
+        <div className="mb-4 flex flex-col sm:flex-row gap-2">
           <input
             ref={newColumnInputRef}
             type="text"
             placeholder="Nome da coluna"
-            className="border border-border rounded-md px-3 py-2 mr-2 bg-secondary"
+            className="border border-border rounded-md px-3 py-2 bg-secondary flex-1"
             onKeyDown={(e) => {
               if (e.key === 'Enter') handleAddColumn();
               if (e.key === 'Escape') setAddColumnActive(false);
@@ -354,45 +360,47 @@ const Kanban = () => {
             variant="ghost" 
             size="sm" 
             onClick={() => setAddColumnActive(false)}
+            className="w-full sm:w-auto"
           >
             Cancelar
           </Button>
         </div>
       )}
       
-      {/* Quadro Kanban */}
+      {/* Quadro Kanban - Melhorado para mobile */}
       <div className="flex-1 overflow-x-auto pb-4">
-        <div className="flex h-full gap-4">
+        <div className="flex h-full gap-2 sm:gap-4 min-w-max">
           {columns.map(column => (
-            <KanbanColumn
-              key={column.id}
-              id={column.id}
-              title={column.title}
-              color={column.color}
-              onDragOver={handleDragOver}
-              onDrop={() => handleDrop(column.id)}
-              onAddTask={() => {
-                setEditingTask(null);
-                setAddTaskDialogOpen(true);
-              }}
-              onDeleteColumn={() => handleDeleteColumn(column.id)}
-            >
-              {tasks
-                .filter(task => task.status === column.id)
-                .map(task => (
-                  <KanbanTask
-                    key={task.id}
-                    task={task}
-                    onDragStart={() => handleDragStart(task)}
-                    onEdit={() => {
-                      setEditingTask(task);
-                      setAddTaskDialogOpen(true);
-                    }}
-                    onDelete={() => handleDeleteTask(task.id)}
-                  />
-                ))
-              }
-            </KanbanColumn>
+            <div key={column.id} className="min-w-[280px] sm:min-w-[320px]">
+              <KanbanColumn
+                id={column.id}
+                title={column.title}
+                color={column.color}
+                onDragOver={handleDragOver}
+                onDrop={() => handleDrop(column.id)}
+                onAddTask={() => {
+                  setEditingTask(null);
+                  setAddTaskDialogOpen(true);
+                }}
+                onDeleteColumn={() => handleDeleteColumn(column.id)}
+              >
+                {tasks
+                  .filter(task => task.status === column.id)
+                  .map(task => (
+                    <KanbanTask
+                      key={task.id}
+                      task={task}
+                      onDragStart={() => handleDragStart(task)}
+                      onEdit={() => {
+                        setEditingTask(task);
+                        setAddTaskDialogOpen(true);
+                      }}
+                      onDelete={() => handleDeleteTask(task.id)}
+                    />
+                  ))
+                }
+              </KanbanColumn>
+            </div>
           ))}
         </div>
       </div>
