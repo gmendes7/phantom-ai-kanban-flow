@@ -30,6 +30,10 @@
     --kanban-inprogress-color: #8b5cf6;
     --kanban-review-color: #ec4899;
     --kanban-done-color: #10b981;
+    
+    --phantom-400: #a855f7;
+    --phantom-500: #9333ea;
+    --phantom-600: #7c3aed;
   }
 
   .light {
@@ -62,10 +66,31 @@
 
   body {
     @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+  
+  /* Mobile optimizations */
+  html {
+    scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  /* Touch optimization for mobile */
+  button, a, [role="button"] {
+    @apply min-h-[44px] min-w-[44px];
+    touch-action: manipulation;
+  }
+  
+  /* Prevent text selection on UI elements */
+  .ui-element {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
   }
 
   .kanban-column {
-    @apply bg-secondary rounded-lg p-4 min-h-[500px] w-[300px] flex flex-col;
+    @apply bg-secondary rounded-lg p-3 sm:p-4 min-h-[400px] sm:min-h-[500px] w-[280px] sm:w-[300px] flex flex-col;
   }
 
   .task-card {
@@ -106,6 +131,39 @@
     animation: float 3s ease-in-out infinite;
   }
   
+  /* Mobile-first responsive containers */
+  .mobile-container {
+    @apply px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto;
+  }
+  
+  .mobile-card {
+    @apply bg-card rounded-lg p-4 sm:p-6 shadow-sm border border-border;
+  }
+  
+  /* Mobile-optimized buttons */
+  .mobile-button {
+    @apply h-12 sm:h-10 px-6 sm:px-4 text-base sm:text-sm font-medium rounded-lg;
+  }
+  
+  /* Mobile-optimized inputs */
+  .mobile-input {
+    @apply h-12 sm:h-10 px-4 sm:px-3 text-base sm:text-sm rounded-lg border border-input;
+  }
+  
+  /* Mobile navigation */
+  .mobile-nav {
+    @apply fixed bottom-0 left-0 right-0 bg-background border-t border-border z-50 sm:hidden;
+  }
+  
+  /* Responsive sidebar */
+  .sidebar-mobile {
+    @apply fixed inset-y-0 left-0 z-50 w-64 bg-secondary transform transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-0;
+  }
+  
+  .sidebar-overlay {
+    @apply fixed inset-0 bg-black/50 z-40 lg:hidden;
+  }
+  
   @keyframes float {
     0% {
       transform: translateY(0px);
@@ -117,10 +175,128 @@
       transform: translateY(0px);
     }
   }
+  
+  /* Enhanced mobile animations */
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .animate-fade-in {
+    animation: fade-in 0.3s ease-out;
+  }
+  
+  /* Mobile-specific spacing */
+  .mobile-spacing {
+    @apply space-y-4 sm:space-y-6;
+  }
+  
+  /* Mobile-optimized grid */
+  .mobile-grid {
+    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6;
+  }
 }
 
 @layer utilities {
   .text-shadow {
     text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Hide scrollbar but keep functionality */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Mobile-safe areas */
+  .safe-top {
+    padding-top: env(safe-area-inset-top);
+  }
+  
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  
+  .safe-left {
+    padding-left: env(safe-area-inset-left);
+  }
+  
+  .safe-right {
+    padding-right: env(safe-area-inset-right);
+  }
+  
+  /* Touch-friendly interactive elements */
+  .touch-target {
+    @apply min-h-[44px] min-w-[44px] flex items-center justify-center;
+  }
+  
+  /* Mobile typography scale */
+  .mobile-title {
+    @apply text-2xl sm:text-3xl lg:text-4xl font-bold;
+  }
+  
+  .mobile-subtitle {
+    @apply text-lg sm:text-xl lg:text-2xl font-semibold;
+  }
+  
+  .mobile-body {
+    @apply text-base sm:text-sm leading-relaxed;
+  }
+  
+  .mobile-caption {
+    @apply text-sm sm:text-xs text-muted-foreground;
+  }
+}
+
+/* Custom scrollbar for non-mobile */
+@media (min-width: 768px) {
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: hsl(var(--muted));
+    border-radius: 4px;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: hsl(var(--muted-foreground));
+    border-radius: 4px;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--accent-foreground));
+  }
+}
+
+/* Mobile-specific overrides */
+@media (max-width: 767px) {
+  .glass-panel {
+    @apply bg-secondary/80 backdrop-blur-sm;
+  }
+  
+  /* Larger touch targets on mobile */
+  button, .clickable {
+    @apply min-h-[48px] touch-manipulation;
+  }
+  
+  /* Better mobile spacing */
+  .container {
+    @apply px-4;
+  }
+  
+  /* Mobile-optimized cards */
+  .card {
+    @apply mx-2 rounded-lg;
   }
 }

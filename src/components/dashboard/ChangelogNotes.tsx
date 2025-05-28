@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -14,6 +13,13 @@ interface ChangelogEntry {
 }
 
 const changelogData: ChangelogEntry[] = [
+  {
+    date: '28/05/2025',
+    title: 'Melhorias Críticas de Interface Mobile',
+    type: 'mobile',
+    description: 'Corrigidos problemas de layout mobile, melhorada responsividade da sidebar, botões com tamanho adequado para toque e espaçamento otimizado.',
+    author: '@schjneiderr'
+  },
   {
     date: '27/05/2025',
     title: 'Sistema de Cadastro de Usuários Implementado',
@@ -148,16 +154,16 @@ const ChangelogNotes = () => {
         variant="outline" 
         size="sm" 
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-20 right-4 z-50 flex items-center gap-2 bg-secondary/80 backdrop-blur-sm"
+        className="fixed bottom-20 right-4 z-50 flex items-center gap-2 bg-secondary/80 backdrop-blur-sm h-11 px-3"
       >
         <Bell className="h-4 w-4 text-phantom-500" />
-        <span>Atualizações</span>
+        <span className="hidden sm:inline">Atualizações</span>
       </Button>
     );
   }
 
   return (
-    <Card className="fixed bottom-20 right-4 w-80 z-50 shadow-lg animate-fade-in">
+    <Card className="fixed bottom-20 right-4 w-80 max-w-[calc(100vw-2rem)] z-50 shadow-lg animate-fade-in">
       <CardHeader className="pb-2">
         <div className="flex justify-between items-center">
           <CardTitle className="text-sm flex items-center gap-2">
@@ -181,7 +187,7 @@ const ChangelogNotes = () => {
                   {getIconForType(entry.type)}
                 </div>
                 <h4 className="font-medium text-sm">{entry.title}</h4>
-                <div className="flex items-center gap-2 text-xs text-muted-foreground mb-1">
+                <div className="flex items-center gap-2 text-xs text-muted-foreground mb-1 flex-wrap">
                   <span>{entry.date}</span>
                   <span className="bg-secondary text-xs px-2 py-0.5 rounded-full">
                     {getLabelForType(entry.type)}
